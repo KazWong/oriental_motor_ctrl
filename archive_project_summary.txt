@@ -1,0 +1,270 @@
+***************************************************************************************
+*                      PROJECT ARCHIVE SUMMARY REPORT
+*
+*                      (archive_project_summary.txt)
+*
+*  PLEASE READ THIS REPORT TO GET THE DETAILED INFORMATION ABOUT THE PROJECT DATA THAT
+*  WAS ARCHIVED FOR THE CURRENT PROJECT
+*
+* The report is divided into following five sections:-
+*
+* Section (1) - PROJECT INFORMATION
+*  This section provides the details of the current project that was archived
+*
+* Section (2) - INCLUDED/EXCLUDED RUNS
+*  This section summarizes the list of design runs for which the results were included
+*  or excluded from the archive
+*
+* Section (3) - ARCHIVED SOURCES
+*  This section summarizes the list of files that were added to the archive
+*
+* Section (3.1) - INCLUDE FILES
+*  This section summarizes the list of 'include' files that were added to the archive
+*
+* Section (3.1.1) - INCLUDE_DIRS SETTINGS
+*  This section summarizes the 'verilog include directory' path settings, if any
+*
+* Section (3.2) - REMOTE SOURCES
+*  This section summarizes the list of referenced 'remote' files that were 'imported'
+*  into the archived project
+*
+* Section (3.3) - SOURCES SUMMARY
+*  This section summarizes the list of all the files present in the archive
+*
+* Section (3.4) - REMOTE IP DEFINITIONS
+*  This section summarizes the list of all the remote IP's present in the archive
+*
+* Section (4) - JOURNAL/LOG FILES
+*  This section summarizes the list of journal/log files that were added to the archive
+*
+* Section (5) - CONFIGURATION SETTINGS/FILES
+*  This section summarizes the configuration settings/files that were added to the archive
+*
+***************************************************************************************
+
+Section (1) - PROJECT INFORMATION
+---------------------------------
+Name      = zynq_motor_ctrl
+Directory = /home/lscmbfong/Desktop/zynq_prj/zynq_motor_ctrl_all
+
+WARNING: Please verify the compiled library directory path for the following property in the
+         current project. The path may point to an invalid location after opening this project.
+         This could happen if the project was unarchived in a location where this path is not
+         accessible. To resolve this issue, please set this property with the desired path
+         before launching simulation:-
+
+Property = compxlib.xsim_compiled_library_dir
+Path     = 
+
+Section (2) - Excluded Runs
+---------------------------
+The run results were excluded for the following runs in the archived project:-
+
+<synth_1>
+<cpu_processing_system7_0_0_synth_1>
+<impl_1>
+<cpu_processing_system7_0_0_impl_1>
+
+Section (3) - ARCHIVED SOURCES
+------------------------------
+The following sub-sections describes the list of sources that were archived for the current project:-
+
+Section (3.1) - INCLUDE FILES
+-----------------------------
+List of referenced 'RTL Include' files that were 'imported' into the archived project:-
+
+None
+
+Section (3.1.1) - INCLUDE_DIRS SETTINGS
+---------------------------------------
+List of the "INCLUDE_DIRS" fileset property settings that may or may not be applicable in the archived
+project, since most the 'RTL Include' files referenced in the original project were 'imported' into the
+archived project.
+
+<sources_1> fileset RTL include directory paths (INCLUDE_DIRS):-
+None
+
+<sim_1> fileset RTL include directory paths (INCLUDE_DIRS):-
+None
+
+Section (3.2) - REMOTE SOURCES
+------------------------------
+List of referenced 'remote' design files that were 'imported' into the archived project:-
+
+<cpu_processing_system7_0_0>
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_0.vh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_constants.vh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_structs.svh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/sc_util_v1_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/03a9/hdl/axi_protocol_checker_v2_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/b9a8/hdl/axi_vip_v1_1_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_local_params.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_params.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_init.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_apis.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_unused_ports.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_gp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_acp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_hp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_aw_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_b_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_w_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_trace_buffer.v
+
+<constrs_1>
+None
+
+<sim_1>
+None
+
+<sources_1>
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_0.vh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_constants.vh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_structs.svh
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/sc_util_v1_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/03a9/hdl/axi_protocol_checker_v2_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/b9a8/hdl/axi_vip_v1_1_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_local_params.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_vl_rfs.sv
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_params.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_init.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_apis.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_unused_ports.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_gp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_acp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_hp.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_aw_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_b_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_w_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_atc.v
+/home/lscmbfong/.Xil/Vivado-3294-lscmbfong/PrjAr/_X_/zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_trace_buffer.v
+
+Section (3.3) - SOURCES SUMMARY
+-------------------------------
+List of all the source files present in the archived project:-
+
+<sources_1>
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/cpu.bd
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xci
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_0.vh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_constants.vh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_structs.svh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/sc_util_v1_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/03a9/hdl/axi_protocol_checker_v2_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/b9a8/hdl/axi_vip_v1_1_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_local_params.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_params.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_init.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_apis.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_unused_ports.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_gp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_acp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_hp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/sim/cpu_processing_system7_0_0.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.dcp
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_stub.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_stub.vhdl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_sim_netlist.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_sim_netlist.vhdl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xdc
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/hdl/verilog/cpu_processing_system7_0_0.hwdef
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.c
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.h
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init_gpl.c
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init_gpl.h
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.tcl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.html
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_aw_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_b_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_w_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_trace_buffer.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/hdl/verilog/processing_system7_v5_5_processing_system7.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/synth/cpu_processing_system7_0_0.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xml
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/synth/cpu.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/sim/cpu.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/cpu_ooc.xdc
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/hw_handoff/cpu.hwh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/hw_handoff/cpu_bd.tcl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/synth/cpu.hwdef
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/hdl/cpu_wrapper.v
+
+<constrs_1>
+./zynq_motor_ctrl.srcs/constrs_1/new/top.xdc
+
+<sim_1>
+None
+
+<cpu_processing_system7_0_0>
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xci
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_0.vh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_constants.vh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/verilog/sc_util_v1_0_3_structs.svh
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/5bb9/hdl/sc_util_v1_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/03a9/hdl/axi_protocol_checker_v2_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/b9a8/hdl/axi_vip_v1_1_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_local_params.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_vl_rfs.sv
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_params.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_reg_init.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_apis.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_unused_ports.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_gp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_acp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70fd/hdl/processing_system7_vip_v1_0_5_axi_hp.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/sim/cpu_processing_system7_0_0.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.dcp
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_stub.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_stub.vhdl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_sim_netlist.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0_sim_netlist.vhdl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xdc
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/hdl/verilog/cpu_processing_system7_0_0.hwdef
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.c
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.h
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init_gpl.c
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init_gpl.h
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.tcl
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/ps7_init.html
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_aw_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_b_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_w_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_atc.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/8fd3/hdl/verilog/processing_system7_v5_5_trace_buffer.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/hdl/verilog/processing_system7_v5_5_processing_system7.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/synth/cpu_processing_system7_0_0.v
+./zynq_motor_ctrl.srcs/sources_1/bd/cpu/ip/cpu_processing_system7_0_0/cpu_processing_system7_0_0.xml
+
+Section (3.4) - REMOTE IP DEFINITIONS
+-------------------------------------
+List of all the remote IP's present in the archived project:-
+
+<sources_1>
+None
+
+<cpu_processing_system7_0_0>
+None
+
+Section (4) - JOURNAL/LOG FILES
+-------------------------------
+List of Journal/Log files that were added to the archived project:-
+
+Source File = /home/lscmbfong/vivado.jou
+Archived Location = ./zynq_motor_ctrl/vivado.jou
+
+Source File = /home/lscmbfong/vivado.log
+Archived Location = ./zynq_motor_ctrl/vivado.log
+
+Section (5) - CONFIGURATION SETTINGS/FILES
+------------------------------------------
+List of configuration settings/files that were added to the archived project:-
+
+

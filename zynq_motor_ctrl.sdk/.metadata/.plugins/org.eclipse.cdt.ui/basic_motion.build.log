@@ -1,0 +1,59 @@
+11:29:59 **** Auto Build of configuration Debug for project basic_motion ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../src/main.c:4:0:
+../../basic_motion_bsp/ps7_cortexa9_0/include/xbasic_types.h:115:2: warning: #warning The xbasics_type.h file is deprecated and users should use xil_types.h and xil_assert. [-Wcpp]
+ #warning  The xbasics_type.h file is deprecated and users should use xil_types.h and xil_assert.
+  ^~~~~~~
+../../basic_motion_bsp/ps7_cortexa9_0/include/xbasic_types.h:116:2: warning: #warning Please refer the Standalone BSP UG647 for further details [-Wcpp]
+ #warning  Please refer the Standalone BSP UG647 for further details
+  ^~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:24:6: warning: unused variable 'Status' [-Wunused-variable]
+  s32 Status;
+      ^~~~~~
+Finished building: ../src/main.c
+ 
+Building file: ../src/motion_ctrl.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motion_ctrl.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motion_ctrl.d" -MT"src/motion_ctrl.o" -o "src/motion_ctrl.o" "../src/motion_ctrl.c"
+Finished building: ../src/motion_ctrl.c
+ 
+Building file: ../src/motor_dac_ctrl.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motor_dac_ctrl.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motor_dac_ctrl.d" -MT"src/motor_dac_ctrl.o" -o "src/motor_dac_ctrl.o" "../src/motor_dac_ctrl.c"
+Finished building: ../src/motor_dac_ctrl.c
+ 
+Building file: ../src/motor_driver_pins.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motor_driver_pins.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motor_driver_pins.d" -MT"src/motor_driver_pins.o" -o "src/motor_driver_pins.o" "../src/motor_driver_pins.c"
+Finished building: ../src/motor_driver_pins.c
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building file: ../src/zynq_can.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/zynq_can.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../basic_motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/zynq_can.d" -MT"src/zynq_can.o" -o "src/zynq_can.o" "../src/zynq_can.c"
+Finished building: ../src/zynq_can.c
+ 
+Building target: basic_motion.elf
+Invoking: ARM v7 gcc linker
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../basic_motion_bsp/ps7_cortexa9_0/lib -o "basic_motion.elf"  ./src/main.o ./src/motion_ctrl.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: basic_motion.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size basic_motion.elf  |tee "basic_motion.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  47040	   1240	  23064	  71344	  116b0	basic_motion.elf
+Finished building: basic_motion.elf.size
+ 
+
+11:30:00 Build Finished (took 812ms)
+

@@ -1,0 +1,22 @@
+/*
+ * canopen.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "zynq_can.h"
+
+#include "canopen.h"
+
+XCanPs Can;
+
+void BootupMsg() {
+	s32 Status;
+	u8 bootup[] = {0x00};
+
+	do {
+		Status = SendFrame(&Can, NMT_NM+NODE_ID, bootup, (u8) sizeof(bootup));
+		if (Status != XST_SUCCESS)
+			usleep(1000);
+	} while(Status != XST_SUCCESS);
+}

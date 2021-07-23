@@ -1,0 +1,60 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Tue Jun  2 09:57:39 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : report_drc -file cpu_wrapper_drc_opted.rpt -pb cpu_wrapper_drc_opted.pb -rpx cpu_wrapper_drc_opted.rpx
+| Design       : cpu_wrapper
+| Device       : xc7z020clg484-2
+| Speed File   : -2
+| Design State : Synthesized
+------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max violations: <unlimited>
+             Violations found: 4
++-------------+----------+-------------------------------------------------------------+------------+
+| Rule        | Severity | Description                                                 | Violations |
++-------------+----------+-------------------------------------------------------------+------------+
+| PLHOLDVIO-2 | Warning  | Non-Optimal connections which could lead to hold violations | 4          |
++-------------+----------+-------------------------------------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+PLHOLDVIO-2#1 Warning
+Non-Optimal connections which could lead to hold violations  
+A LUT A/fixp_clkdiv/q_i_2 is driving clock pin of 1 cells. This could lead to large hold time violations. Involved cells are:
+A/fixP_counter/dff_00/q_reg
+Related violations: <none>
+
+PLHOLDVIO-2#2 Warning
+Non-Optimal connections which could lead to hold violations  
+A LUT B/fixp_clkdiv/q_i_2__0 is driving clock pin of 1 cells. This could lead to large hold time violations. Involved cells are:
+B/fixP_counter/dff_00/q_reg
+Related violations: <none>
+
+PLHOLDVIO-2#3 Warning
+Non-Optimal connections which could lead to hold violations  
+A LUT C/fixp_clkdiv/q_i_2__1 is driving clock pin of 1 cells. This could lead to large hold time violations. Involved cells are:
+C/fixP_counter/dff_00/q_reg
+Related violations: <none>
+
+PLHOLDVIO-2#4 Warning
+Non-Optimal connections which could lead to hold violations  
+A LUT D/fixp_clkdiv/q_i_2__2 is driving clock pin of 1 cells. This could lead to large hold time violations. Involved cells are:
+D/fixP_counter/dff_00/q_reg
+Related violations: <none>
+
+

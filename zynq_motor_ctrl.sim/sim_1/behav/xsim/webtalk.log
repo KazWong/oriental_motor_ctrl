@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Webtalk v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Tue May 12 15:14:15 2020
+# Process ID: 4046
+# Current directory: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sim/sim_1/behav/xsim/xsim.dir/cpu_wrapper_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sim/sim_1/behav/xsim/xsim.dir/cpu_wrapper_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Tue May 12 15:14:16 2020...

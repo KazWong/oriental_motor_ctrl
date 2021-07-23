@@ -1,0 +1,10 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../zynq_motor_ctrl.ip_user_files/bd/cpu/ip/cpu_axi_gpio_0_0/sim/cpu_axi_gpio_0_0.vhd" \
+"../../../../zynq_motor_ctrl.ip_user_files/bd/cpu/ip/cpu_axi_gpio_1_0/sim/cpu_axi_gpio_1_0.vhd" \
+"../../../../zynq_motor_ctrl.ip_user_files/bd/cpu/ip/cpu_rst_ps7_0_50M_0/sim/cpu_rst_ps7_0_50M_0.vhd" \
+"../../../../zynq_motor_ctrl.ip_user_files/bd/cpu/ip/cpu_axi_gpio_1_1/sim/cpu_axi_gpio_1_1.vhd" \
+"../../../../zynq_motor_ctrl.ip_user_files/bd/cpu/ip/cpu_axi_gpio_2_0/sim/cpu_axi_gpio_2_0.vhd" \
+
+# Do not sort compile order
+nosort

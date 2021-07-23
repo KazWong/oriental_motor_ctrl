@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="/home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl" key="bootgen_files_selection"/>
+	<item value="/home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sdk/bootloader/Debug" key="zynq_flash_files_selection"/>
+	<item value="/home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl" key="last_stored_selection"/>
+</section>

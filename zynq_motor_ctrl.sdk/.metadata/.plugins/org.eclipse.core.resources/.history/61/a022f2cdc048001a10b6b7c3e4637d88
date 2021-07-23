@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xbasic_types.h"
+
+#include "sleep.h"
+
+#include "motor_driver_pins.h"
+#include "motor_dac_ctrl.h"
+#include "zynq_can.h"
+
+u8 dac_val[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+XCanPs Can;
+
+u8 TxFrame[] = {'a', 'b', '1', 'd', 'e', '6', '8', '1'};
+u32 RxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+
+int main(void){
+
+	s32 Status;
+
+    init_platform();
+
+    print("Basic ZYNQ motor control test.\n\r");
+
+
+// Motor
+    zynq_to_motor_init();
+    dac_init_val();
+
+    dac_send_four_val(dac_val);
+    zynq_to_motor_ctrl(0x88, 0x88);
+
+    zynq_write_fw_bw_pins(emio_mot_a_fw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_a_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_b_fw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_b_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_c_fw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_c_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_d_fw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+
+
+// CAN
+    CanPsPolledExample(CAN_DEVICE_ID, &Can);
+
+    int count = 0;
+/*
+    while (count < 200) {
+    //TxFrame[7] = count;
+    Status = SendFrame(&Can, count, TxFrame, (u8) sizeof(TxFrame));
+    if (Status != XST_SUCCESS) {
+    	print("Send failed.\n\r");
+    	return XST_FAILURE;
+    }
+    count++;
+    usleep(33333);
+    }
+*/
+
+	//print("Sent, Receive Frame.\n");
+	count = 0;
+	u8 high_dac = 0x0, low_dac = 0x0;
+	int dac = 0, MAX_DAC = 0xCCC;
+
+	while (count < 10) {
+		Xfloat32 x;
+		u8 *ptr;
+
+		ptr = &x;
+
+		Status = RecvFrame(&Can, 0x88, RxFrame, 1);
+		if (Status != XST_SUCCESS) {
+			print("Receive failed.\n\r");
+			continue;
+		}
+		//print("Received.\n\r");
+
+		u8 *FramePtr;
+		printf("%x ", RxFrame[0] >> XCANPS_IDR_ID1_SHIFT);
+		printf("%i ", RxFrame[1] >> XCANPS_DLCR_DLC_SHIFT);
+		FramePtr = (u8 *)(&RxFrame[2]);
+		for (int i=0;i<4;i++, ptr++, FramePtr++)
+			*ptr = *FramePtr;
+
+		//Status = SendFrame(&Can, 0x111, RxFrame[2], (u8) sizeof(RxFrame[2]));
+		print("\n");
+
+		dac = x * 4095. / 6.554;
+
+		high_dac = (dac >> 8) & 0xFF;
+		low_dac = dac & 0xFF;
+		if ((MAX_DAC >= dac) && (0x000 <= dac)) {
+			dac_val[0] = dac_val[2] = dac_val[4] = dac_val[6] = high_dac;
+			dac_val[1] = dac_val[3] = dac_val[5] = dac_val[7] = low_dac;
+			dac_send_four_val(dac_val);
+		}
+
+		count++;
+		usleep(10000);
+	}
+
+	while (0x0000 < dac) {
+		dac_val[0] = dac_val[2] = dac_val[4] = dac_val[6] = high_dac;
+		dac_val[1] = dac_val[3] = dac_val[5] = dac_val[7] = low_dac;
+
+		if (low_dac - 0xE >= 0x00)
+			low_dac = low_dac - 0xE;
+		else {
+			high_dac = high_dac - 1;
+			low_dac = 0xFF + (char) (low_dac - 0xE);
+		}
+
+		dac = (high_dac << 8) + low_dac;
+
+		if (dac > 0x0000) {
+			dac_send_four_val(dac_val);
+		} else {
+			dac_val[0] = dac_val[2] = dac_val[4] = dac_val[6] = 0x00;
+			dac_val[1] = dac_val[3] = dac_val[5] = dac_val[7] = 0x00;
+			dac_send_four_val(dac_val);
+		}
+		usleep(8000);
+	}
+
+	xil_printf("Successfully ran self rotation Test\r\n");
+
+    cleanup_platform();
+    return 0;
+}

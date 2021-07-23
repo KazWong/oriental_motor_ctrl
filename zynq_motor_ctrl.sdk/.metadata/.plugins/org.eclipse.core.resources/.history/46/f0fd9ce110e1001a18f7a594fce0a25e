@@ -1,0 +1,46 @@
+/*
+ * motion.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "motion.h"
+
+void SoftStop(u16 *dac) {
+	s32 Status;
+	u8 EXIT[] = {'5', '5', '5', '5', '5', '5', '5', '5'};
+	Status = SendFrame(&Can, 0x55, EXIT, (u8) sizeof(EXIT));
+
+	XTime t_now, t_softstop;
+	double ctrl_hz = 550.0;
+	u8 dac_val[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	XTime_GetTime(&t_now);
+	XTime_GetTime(&t_softstop);
+	while (dac[0] > 0x0000 || dac[1] > 0x0000 || dac[2] > 0x0000 || dac[3] > 0x0000) {
+		if (1./ctrl_hz < ( 1.0 * (t_now - t_softstop) / (COUNTS_PER_SECOND) )) {
+			for (int i=0; i<4; i++) {
+				u8 *pt_dac = (u8*)&dac[i];
+				if ( (s32)(dac[i] - 0x6) > 0) {
+					dac[i] = dac[i] - 0x6;
+				} else {
+					dac[i] = 0;
+				}
+				dac_val[2*i] = *(pt_dac+1);
+				dac_val[2*i+1] = *pt_dac;
+			}
+
+			dac_send_four_val(dac_val);
+			XTime_GetTime(&t_softstop);
+		}
+
+		XTime_GetTime(&t_now);
+	}
+
+
+	XTime_GetTime(&t_softstop);
+	do{
+		XTime_GetTime(&t_now);
+	}while((0.1 > (1.0*(t_now - t_softstop) / (COUNTS_PER_SECOND))));
+
+}

@@ -1,0 +1,117 @@
+/*
+ * canopen.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "zynq_can.h"
+#include <stdlib.h>
+
+#include "canopen.h"
+
+u32 vel_frame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+u8 state = BOOTUP, state_ret = ENTRY;
+u8 cmd_opt = 0x00;
+PDOMsg PDOMsg_buffer[1024];
+int PDOMsg_buf_start_idx = 0;
+int PDOMsg_buf_end_idx = 0;
+
+XCanPs Can;
+
+
+void CANOpenInit() {
+	state = BOOTUP;
+	CanPsPolledExample(CAN_DEVICE_ID, &Can);
+}
+
+u8 CANOpenBootUp() {
+	PDOMsg null = {.cob_id = 0x00, .msg = 0x00, .size = 0x00};
+	for (int i=0;i<1024;i++) {
+		PDOMsg_buffer[i] = null;
+	}
+	PDOMsg_buf_start_idx = 0;
+	PDOMsg_buf_end_idx = 0;
+
+	return XST_SUCCESS;
+}
+
+void BootupMsg() {
+	s32 Status;
+	u8 bootup[] = {0x00};
+
+	do {
+		Status = SendFrame(&Can, NMT_NM+NODE_ID, bootup, (u8) sizeof(bootup));
+		if (Status != XST_SUCCESS)
+			usleep(1000);
+	} while(Status != XST_SUCCESS);
+}
+
+void FreeMsg(u8 size, u8* msg) {
+	s32 Status;
+	u8 bootup[] = {0x00};
+
+	do {
+		Status = SendFrame(&Can, NMT_NM+NODE_ID, bootup, (u8) sizeof(bootup));
+		if (Status != XST_SUCCESS)
+			usleep(1000);
+	} while(Status != XST_SUCCESS);
+}
+
+void PDOut() {
+//Send PDO msg
+	if (PDOMsg_buf_start_idx < PDOMsg_buf_end_idx) {
+		SendFrame_NonBlk(&Can, PDOMsg_buffer[PDOMsg_buf_start_idx].cob_id,
+				PDOMsg_buffer[PDOMsg_buf_start_idx].msg,
+				(u8) sizeof(PDOMsg_buffer[PDOMsg_buf_start_idx].msg));
+
+		PDOMsg_buf_start_idx += 1;
+		if (PDOMsg_buf_start_idx == 1024)
+			PDOMsg_buf_start_idx = 0;
+	}
+}
+
+void CANopenIn() {
+//CAN Receive
+	s32 Status;
+	u8 *frame_ptr;
+	u32 RxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS];
+
+	Status = RecvFrame_NonBlk(&Can, -1, RxFrame, 10);
+	if (Status != XST_SUCCESS) {
+		//Status = SendFrame(&Can, 0x01, TxFrame, (u8) sizeof(TxFrame));
+		return;
+	}
+
+	switch(RxFrame[0]) {
+	case ID_NMT_NC: //State change Only
+		/*if (RxFrame[3] == NODE_ID && \
+				state != RxFrame[2] && \
+				(RxFrame[2] == PREOP || RxFrame[2] == RESET || \
+				 RxFrame[2] == BOOTUP || RxFrame[2] == OP || \
+				 RxFrame[2] == STOP)) {*/
+		if (RxFrame[4] == NODE_ID) {
+			state = RxFrame[2];
+			state_ret = ENTRY;
+		}
+		break;
+	case ID_TIMESTAMP:
+		break;
+	case ID_PDO_WHEEL_S:
+	case ID_PDO_WHEEL_A:
+	case ID_PDO_WHEEL_Y:
+	case ID_PDO_WHEEL_W:
+	case ID_PDO_ODOM_X:
+	case ID_PDO_ODOM_Y:
+	case ID_PDO_ODOM_Z:
+		//Tx PDOs
+		break;
+	case ID_PDO_CMD_VEL: //PDO msg for velocity command
+		for (int i=0;i<XCANPS_MAX_FRAME_SIZE_IN_WORDS;i++)
+			vel_frame[i] = RxFrame[i];
+		break;
+	case ID_PDO_CMD_OPT: //PDO msg for optional command
+		frame_ptr = (u8 *)(&RxFrame[2]);
+		cmd_opt = *frame_ptr;
+		break;
+	}
+}

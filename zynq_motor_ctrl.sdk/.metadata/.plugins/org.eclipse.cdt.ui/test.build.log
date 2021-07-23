@@ -1,0 +1,68 @@
+10:46:25 **** Auto Build of configuration Debug for project test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../src/main.c:8:0:
+../../test_bsp/ps7_cortexa9_0/include/xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+../src/main.c: In function 'End':
+../src/main.c:60:6: warning: variable 'Status' set but not used [-Wunused-but-set-variable]
+  s32 Status;
+      ^~~~~~
+../src/main.c: In function 'SoftStop':
+../src/main.c:78:6: warning: variable 'Status' set but not used [-Wunused-but-set-variable]
+  s32 Status;
+      ^~~~~~
+../src/main.c: In function 'CANout':
+../src/main.c:162:6: warning: variable 'Status' set but not used [-Wunused-but-set-variable]
+  s32 Status;
+      ^~~~~~
+Finished building: ../src/main.c
+ 
+Building file: ../src/motor_axi_gpio.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motor_axi_gpio.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motor_axi_gpio.d" -MT"src/motor_axi_gpio.o" -o "src/motor_axi_gpio.o" "../src/motor_axi_gpio.c"
+Finished building: ../src/motor_axi_gpio.c
+ 
+Building file: ../src/motor_dac_ctrl.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motor_dac_ctrl.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motor_dac_ctrl.d" -MT"src/motor_dac_ctrl.o" -o "src/motor_dac_ctrl.o" "../src/motor_dac_ctrl.c"
+Finished building: ../src/motor_dac_ctrl.c
+ 
+Building file: ../src/motor_driver_pins.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/motor_driver_pins.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/motor_driver_pins.d" -MT"src/motor_driver_pins.o" -o "src/motor_driver_pins.o" "../src/motor_driver_pins.c"
+Finished building: ../src/motor_driver_pins.c
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building file: ../src/zynq_can.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/zynq_can.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/zynq_can.d" -MT"src/zynq_can.o" -o "src/zynq_can.o" "../src/zynq_can.c"
+In file included from ../src/zynq_can.c:2:0:
+../../test_bsp/ps7_cortexa9_0/include/xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+Finished building: ../src/zynq_can.c
+ 
+Building target: test.elf
+Invoking: ARM v7 gcc linker
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../test_bsp/ps7_cortexa9_0/lib -o "test.elf"  ./src/main.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o   -lm -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: test.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size test.elf  |tee "test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  62940	   1376	  23752	  88068	  15804	test.elf
+Finished building: test.elf.size
+ 
+
+10:46:27 Build Finished (took 1s.165ms)
+

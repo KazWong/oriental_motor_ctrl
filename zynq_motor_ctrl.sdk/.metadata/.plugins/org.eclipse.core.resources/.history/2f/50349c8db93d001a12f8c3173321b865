@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+
+#include "sleep.h"
+
+#include "motor_driver_pins.h"
+#include "motor_dac_ctrl.h"
+#include "zynq_can.h"
+
+u8 dac_val[] = {0x00,0xFF,0x00,0x55,0x00,0xAA,0x00,0x77};
+
+XCanPs Can;
+
+u32 TxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+u32 RxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+
+int main(void){
+
+	s32 Status;
+
+    init_platform();
+
+    print("Basic ZYNQ motor control test.\n\r");
+
+    zynq_to_motor_init();
+    dac_init_val();
+
+    dac_send_four_val(dac_val);
+    zynq_to_motor_ctrl(0x88, 0x88);
+
+    zynq_write_fw_bw_pins(emio_mot_d_fw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_d_fw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_d_bw, pin_on);
+    zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+
+    CanPsPolledExample(CAN_DEVICE_ID, &Can);
+
+    int count = 0;
+    while (count++ < 100) {
+    	print("Send Frame.\n");
+    	Status = SendFrame(&Can, 0x88, TxFrame);
+    	if (Status != XST_SUCCESS) {
+    		return XST_FAILURE;
+    	}
+    	usleep(100000);
+    }
+
+	print("Sent, Receive Frame.\n");
+	Status = RecvFrame(&Can, 0x88, RxFrame, 10);
+	if (Status != XST_SUCCESS) {
+		print("Receive failed.\n\r");
+		return XST_FAILURE;
+	}
+	print("Received.\n\r");
+
+	xil_printf("Successfully ran CAN Polled Mode Example Test\r\n");
+
+    cleanup_platform();
+    return 0;
+}

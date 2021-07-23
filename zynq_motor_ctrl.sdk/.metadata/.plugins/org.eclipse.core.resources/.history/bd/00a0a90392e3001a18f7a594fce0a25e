@@ -1,0 +1,45 @@
+/*
+ * canopen.h
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+
+#ifndef SRC_CANOPEN_H_
+#define SRC_CANOPEN_H_
+
+#define NODE_ID		0x30
+
+#define NMT_NM		0x700	//NMT node monitoring
+#define NMT_NC		0x000	//NMT node control
+#define SYNC		0x080	//Sync
+#define TIMESTAMP	0x100	//TimeStamp
+#define SDO_TX		0x580	//SDO Transmit
+#define SDO_RX		0x600	//SDO Receive
+
+#define PDO_WHEEL_S	0x381
+#define PDO_WHEEL_A	0x382
+#define PDO_WHEEL_Y	0x383
+#define PDO_WHEEL_W	0x384
+#define PDO_ODOM_X	0x385
+#define PDO_ODOM_Y	0x386
+#define PDO_ODOM_Z	0x387
+
+extern XCanPs Can;
+
+struct _PDOMsg {
+	int cob_id;
+	u8 size;
+	u8 *msg;
+};
+typedef struct _PDOMsg PDOMsg;
+
+extern PDOMsg PDOMsg_buffer[1024];
+extern int PDOMsg_buf_start_idx;
+extern int PDOMsg_buf_end_idx;
+
+void BootupMsg();
+
+void CANinout();
+
+#endif /* SRC_CANOPEN_H_ */

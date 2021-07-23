@@ -1,0 +1,486 @@
+#include <stdio.h>
+#include <math.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xil_types.h"
+
+#include "sleep.h"
+#include "xtime_l.h"
+
+#include "motor_driver_pins.h"
+#include "motor_dac_ctrl.h"
+#include "motor_axi_gpio.h"
+#include "zynq_can.h"
+
+
+XCanPs Can;
+
+u32 pin_fw[] = {emio_mot_a_fw, emio_mot_b_fw, emio_mot_c_fw, emio_mot_d_fw};
+u32 pin_bw[] = {emio_mot_a_bw, emio_mot_b_bw, emio_mot_c_bw, emio_mot_d_bw};
+
+int Init() {
+	s32 Status;
+	u8 START[] = {'s', 't', 'a', 'r', 't', '0', '0', '1'};
+	u8 zero[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	int count = 0;
+
+	init_platform();
+// Motor
+    zynq_to_motor_init();
+    dac_init_val();
+
+    zynq_to_motor_ctrl(0x88, 0x88);
+
+    for (int i=0;i<4;i++) {
+    	zynq_write_fw_bw_pins(pin_fw[i], pin_on);
+    	zynq_write_fw_bw_pins(pin_bw[i], pin_off);
+    }
+    dac_send_four_val(zero);
+    AXIGPIOInit();
+
+
+// CAN
+    CanPsPolledExample(CAN_DEVICE_ID, &Can);
+
+// Ready Msg
+    while (count < 10) {
+    	START[7] = count;
+    	Status = SendFrame(&Can, count, START, (u8) sizeof(START));
+    	if (Status != XST_SUCCESS) {
+    		print("Send failed.\n\r");
+    		return XST_FAILURE;
+    	}
+    	count++;
+    	usleep(1000);
+    }
+    return XST_SUCCESS;
+}
+
+void End() {
+	s32 Status;
+	u8 EXIT[] = {'5', '5', '5', '5', '5', '5', '5', '5'};
+
+	for (int i=0;i<4;i++) {
+	   	zynq_write_fw_bw_pins(pin_fw[i], pin_off);
+	  	zynq_write_fw_bw_pins(pin_bw[i], pin_off);
+	}
+
+	Status = SendFrame(&Can, 0x66, EXIT, (u8) sizeof(EXIT));
+
+    //cleanup_platform();
+}
+
+
+
+
+
+u16 dac[4] = {0, 0, 0, 0};
+void SoftStop() {
+	s32 Status;
+	u8 EXIT[] = {'5', '5', '5', '5', '5', '5', '5', '5'};
+	Status = SendFrame(&Can, 0x55, EXIT, (u8) sizeof(EXIT));
+
+	XTime t_now, t_softstop;
+	double ctrl_hz = 550.0;
+	u8 dac_val[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	XTime_GetTime(&t_now);
+	XTime_GetTime(&t_softstop);
+	while (dac[0] > 0x0000 || dac[1] > 0x0000 || dac[2] > 0x0000 || dac[3] > 0x0000) {
+		if (1./ctrl_hz < ( 1.0 * (t_now - t_softstop) / (COUNTS_PER_SECOND) )) {
+			for (int i=0; i<4; i++) {
+				u8 *pt_dac = (u8*)&dac[i];
+				if ( (s32)(dac[i] - 0x6) > 0) {
+					dac[i] = dac[i] - 0x6;
+				} else {
+					dac[i] = 0;
+				}
+				dac_val[2*i] = *(pt_dac+1);
+				dac_val[2*i+1] = *pt_dac;
+			}
+
+			dac_send_four_val(dac_val);
+			XTime_GetTime(&t_softstop);
+		}
+
+		XTime_GetTime(&t_now);
+	}
+
+
+	XTime_GetTime(&t_softstop);
+	do{
+		XTime_GetTime(&t_now);
+	}while((0.1 > (1.0*(t_now - t_softstop) / (COUNTS_PER_SECOND))));
+
+}
+
+
+
+
+_Float64 lx_ly = 0.4165;
+_Float64 R = 0.07825;
+_Float64 LIM_VEL = 6.555456670490;
+_Float64 MAX_VEL = 4.9;//4.916592502868;
+_Float64 MIN_VEL = 0.130913340981;//v = HzpiD/150
+//_Float64 MAX_OMEGA = 83.77580409572;
+
+//
+_Float64 duration = 60000.0;
+
+//Ziegler–Nichols method: Ku=1.33, Tu=0.5, Kp=0.798, Ki=3.192, Kd=0.0049875
+_Float64 Kp = 0.5;
+_Float64 Ki = 4.5;
+_Float64 Kd = 0.002;
+
+//Motion Profile
+_Float64 jmax = 1.0;
+_Float64 amax = 2.0;//2.37551;
+
+//
+_Float64 u[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 e[3][4] = { {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0} };
+_Float64 y[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 v[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 r[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 a[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 a_y[5][4] = { {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0} };
+_Float64 s[4] = {0.0, 0.0, 0.0, 0.0};
+_Float64 odom[3] = {0.0, 0.0, 0.0};
+_Float64 p_t[4] = {0.00625, 0.00625, 0.00625, 0.00625};
+
+void CANout(_Float64 fb_dt) {
+	s32 Status;
+	s16 int_s16 = 0;
+	u8 msg_11[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_22[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_33[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_44[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_55[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(s[i] * 100.);
+		msg_11[2*i] = *(ptr);
+		msg_11[2*i+1] = *(ptr+1);
+	}
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * a[i] / LIM_VEL);
+		msg_22[2*i] = *(ptr);
+		msg_22[2*i+1] = *(ptr+1);
+	}
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * y[i] / LIM_VEL);
+		msg_33[2*i] = *(ptr);
+		msg_33[2*i+1] = *(ptr+1);
+	}
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * u[i] / LIM_VEL);
+		msg_44[2*i] = *(ptr);
+		msg_44[2*i+1] = *(ptr+1);
+	}
+
+	u16 int_u16 = 0;
+	for (int i=0;i<3;i++) {
+		u8 *ptr = (u8*)&int_u16;
+		int_u16 = (u16)(fabs(odom[i]) * 100.);
+		msg_55[2*i] = *(ptr);
+		msg_55[2*i+1] = *(ptr+1);
+	}
+	msg_55[6]  = (odom[0] >= 0)? 0:4;
+	msg_55[6] += (odom[1] >= 0)? 0:2;
+	msg_55[6] += (odom[2] >= 0)? 0:1;
+
+
+	Status = SendFrame(&Can, 0x11, msg_11, (u8) sizeof(msg_11));//pos
+	Status = SendFrame(&Can, 0x22, msg_22, (u8) sizeof(msg_22));//acc
+	Status = SendFrame(&Can, 0x33, msg_33, (u8) sizeof(msg_33));//vel
+	Status = SendFrame(&Can, 0x44, msg_44, (u8) sizeof(msg_44));//cmd
+	Status = SendFrame(&Can, 0x55, msg_55, (u8) sizeof(msg_55));//odom
+}
+
+void SpeedOut() {
+	u32 count[4] = {0, 0, 0, 0};
+	double p[4] = {0.0, 0.0, 0.0, 0.0};
+	double t[4] = {0.0, 0.0, 0.0, 0.0};
+	double K = 10000000.*M_PI*2.*R/150.;
+
+	count[0] = Xil_In32(0x41200000);
+	count[1] = Xil_In32(0x41200008);
+	count[2] = Xil_In32(0x41210000);
+	count[3] = Xil_In32(0x41210008);
+
+	for (int i=0;i<4;i++) {
+		t[i] = (double)(count[i] >> 19);
+		p[i] = (double)(count[i] & 0x7FFFF);
+		y[i] = (p[i] == 0.0 || t[i] == 0.0)? 0.0 : K * t[i] / p[i];
+		if (zynq_read_fw_bw_pins(pin_bw[i]) && !zynq_read_fw_bw_pins(pin_fw[i]))
+			y[i] = -y[i];
+	}
+}
+
+void Integrator(_Float64 dt) {
+	double sx, sy, rz, _s[4];
+
+	for (int i=0;i<4;i++)
+		_s[i] = y[i] * dt;
+
+	//Fwd Kinematics + odom est
+	sx = (-_s[0] + _s[1] - _s[2] + _s[3]) / 4.;
+	sy = ( _s[0] + _s[1] - _s[2] - _s[3]) / 4.;
+	rz = ( _s[0] + _s[1] + _s[2] + _s[3]) / (lx_ly*4.);
+	odom[2] += rz;
+	odom[0] += sx * cos(odom[2]) - sy * sin(odom[2]);
+	odom[1] += sx * sin(odom[2]) + sy * cos(odom[2]);
+
+	for (int i=0;i<4;i++)
+		s[i] += _s[i];
+}
+
+void Differentiator(_Float64 dt) {
+	for (int i=0;i<4;i++) {
+		double sum = 0.0;
+
+		a_y[4][i] = a_y[3][i];
+		a_y[3][i] = a_y[2][i];
+		a_y[2][i] = a_y[1][i];
+		a_y[1][i] = a_y[0][i];
+		a_y[0][i] = y[i];
+
+		for (int j=0;j<4;j++)
+			sum += (a_y[j][i] - a_y[j+1][i]);
+		a[i] = sum / dt / 4.0;
+	}
+}
+
+void Setpoint(_Float64 dt) {
+	s32 Status;
+	u32 RxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+	u16 x, y, z;
+	u8 *ptr_x, *ptr_y, *ptr_z, b;
+	_Float64 vx, vy, wz;
+
+	ptr_x = (u8*)(&x);
+	ptr_y = (u8*)(&y);
+	ptr_z = (u8*)(&z);
+
+	Status = RecvFrame(&Can, -1, RxFrame, 10);
+	if (Status != XST_SUCCESS) {
+		//Status = SendFrame(&Can, 0x01, TxFrame, (u8) sizeof(TxFrame));
+		return;
+	}
+
+	if (CheckID(0x88, RxFrame)) {
+		u8 *FramePtr;
+		FramePtr = (u8 *)(&RxFrame[2]);
+		for (int i=0;i<2;i++, ptr_x++, ptr_y++, ptr_z++, FramePtr++) {
+			*ptr_x = *FramePtr;
+			*ptr_y = *(FramePtr+2);
+			*ptr_z = *(FramePtr+4);
+		}
+		b = (u8)*(((u8*)(&RxFrame[2]))+6);
+
+		vx = (_Float64)x / 65535.0 * LIM_VEL;
+		vy = (_Float64)y / 65535.0 * LIM_VEL;
+		wz = (_Float64)z / 65535.0 * LIM_VEL/(lx_ly);
+
+		vx = (vx > MAX_VEL)? MAX_VEL:vx;
+		vy = (vy > MAX_VEL)? MAX_VEL:vy;
+		wz = (wz > MAX_VEL/(lx_ly))? MAX_VEL/(lx_ly):wz;
+
+		vx *= (1 - ((b & 0b100)>>1));
+		vy *= (1 - (b & 0b010));
+		wz *= (1 - ((b & 0b001)<<1));
+
+		//Inv Kinematics
+		v[0] = (- vx + vy + (lx_ly)*wz);
+		v[1] = (  vx + vy + (lx_ly)*wz);
+		v[2] = (- vx - vy + (lx_ly)*wz);
+		v[3] = (  vx - vy + (lx_ly)*wz);
+	} else if (CheckID(0x99, RxFrame)) {
+		u8 *FramePtr;
+		FramePtr = (u8 *)(&RxFrame[2]);
+
+		switch (*FramePtr) {
+		case 0xEF:
+			duration = 0;
+			break;
+		case 0xDD:
+			s[0] = s[1] = s[2] = s[3] = 0.0;
+			odom[0] = odom[1] = odom[2] = 0.0;
+			break;
+		case 0xDF:
+			u[0] = u[1] = u[2] = u[3] = 0.0;
+			break;
+		}
+	}
+}
+
+void Ctrl(_Float64 Ts, _Float64 fb_dt, _Float64 cmd_dt){
+	/*for (int i=0; i<4; i++) {
+		_Float64 t = 0.0, i_v = 0.0;
+
+		if (a[i] == 0.0)
+			t = 0.36;
+		else
+			t = ( -jmax + sqrt( (double)(jmax*jmax - 4*jmax*jmax*fabs(a[i])/(4*amax)) ) ) / -((jmax*jmax)/(4*amax));
+
+		i_v = -jmax*jmax/(2*amax) * t*t*t + jmax*t*t;
+
+		if ( fabs(i_v) > fabs(v[i] - y[i]) ) {
+			t = t - Ts;
+		} else {
+			t = t + Ts;
+		}
+
+		if (t > 2*amax/jmax)
+			t = 2*amax/jmax;
+		else if (t < 0.0)
+			t = 0.0;
+
+		r[i] = (i_v);
+		if (v[i] < 0.0)
+			r[i] = -r[i];
+
+
+		r[i] = r[i] + y[i];
+	}*/
+
+	for (int i=0; i<4; i++) {
+		e[2][i] = e[1][i];
+		e[1][i] = e[0][i];
+		e[0][i] = v[i] - y[i];//r[i] - y[i];
+
+		u[i] = u[i] + (Kp*(e[0][i]-e[1][i]) + Ki*Ts*(e[0][i]) + (Kd/Ts)*(e[0][i] - 2*e[1][i] + e[2][i]));
+	}
+}
+
+void Plant(int idx, _Float64 dt) {
+	u8 dac_addr[] = {DAC_IIC_ADDR_A, DAC_IIC_ADDR_B, DAC_IIC_ADDR_C, DAC_IIC_ADDR_D};
+	u8 dac_val[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u16 MAX_DAC = 0x0FFF; //Final Protection, local variable
+	double DAC_COMPEN = 1.03310880392010;//1.05*6.45/LIM_VEL;
+
+	for (int i=0; i<4; i++) {
+		_Float64 _u[4] = {0.0, 0.0, 0.0, 0.0};
+		u8 *pt_dac = (u8*)&dac[i];
+
+		//deadzone
+		//_u[i] = (fabs(u[i]) >= 0.0 && fabs(u[i]) <= MIN_VEL)? 0.0:u[i];
+		_u[i] = u[i];
+
+		//direction
+		u8 su = *((s64 *)(&_u[i]))>>63;
+		u8 sy = *((s64 *)(&y[i]))>>63;
+
+		if (su) {
+			zynq_write_fw_bw_pins(pin_fw[i], pin_off);
+			zynq_write_fw_bw_pins(pin_bw[i], pin_on);
+		} else {
+			zynq_write_fw_bw_pins(pin_fw[i], pin_on);
+			zynq_write_fw_bw_pins(pin_bw[i], pin_off);
+		}
+
+		//send dac
+		dac[i] = (u16)floor(fabs(_u[i] / (LIM_VEL*DAC_COMPEN)) * 4095.);//LIM_VEL*1.05 compensate offset of estv and cmdv
+
+		if (dac[i] > MAX_DAC) {
+			dac[i] = MAX_DAC;
+		} else if (dac[i] < 0x000) {
+			dac[i] = 0x000;
+		}
+
+		dac_val[2*i] = *(pt_dac+1);
+		dac_val[2*i+1] = *pt_dac;
+
+		dac_send_val(dac_addr[i], &dac_val[2*i]);
+	}
+}
+
+int main(void) {
+	XTime t_start, t_now, t_ctrl, t_speedout, t_cmd, t_Ts, t_Ta, t_Tca, t_CANout, t_est, t_est_dt;
+	XTime t_p[4];
+	double  elapsed_time = 0.0;
+	float ctrl_hz = 50., fb_hz = 50., cmd_hz = 20., can_hz = 10., est_hz = 5.;
+
+	//5s Startup time
+	//XTime_GetTime(&t_start);
+	//XTime_GetTime(&t_now);
+	//while (1.0 > 1.0 * (t_now - t_start) / (COUNTS_PER_SECOND)) XTime_GetTime(&t_now);
+
+	//
+	Init();
+	for (int i=0;i<4;i++) {
+		zynq_write_fw_bw_pins(pin_fw[i], pin_on);
+		zynq_write_fw_bw_pins(pin_bw[i], pin_off);
+	}
+
+	XTime_GetTime(&t_start);
+	XTime_GetTime(&t_now);
+	XTime_GetTime(&t_speedout);
+	XTime_GetTime(&t_cmd);
+	XTime_GetTime(&t_est);
+	XTime_GetTime(&t_ctrl);
+	XTime_GetTime(&t_CANout);
+
+	while (elapsed_time < duration) {
+		XTime_GetTime(&t_now);
+		if (1./fb_hz <= ( 1.0 * (t_now - t_speedout) / (COUNTS_PER_SECOND) )) {
+			SpeedOut();
+			Integrator((_Float64)(1.0 * (t_now - t_speedout) / (COUNTS_PER_SECOND)));
+			XTime_GetTime(&t_speedout);
+		}
+
+		XTime_GetTime(&t_now);
+		if (1./can_hz <= ( 1.0 * (t_now - t_CANout) / (COUNTS_PER_SECOND) )) {
+			CANout((_Float64)(1.0 * (t_now - t_Ta) / (COUNTS_PER_SECOND)));
+			XTime_GetTime(&t_CANout);
+		}
+
+		XTime_GetTime(&t_now);
+		if (1./est_hz <= ( 1.0 * (t_now - t_est) / (COUNTS_PER_SECOND) )) {
+			XTime_GetTime(&t_Ta);
+			Differentiator((_Float64)(1.0 * (t_now - t_est) / (COUNTS_PER_SECOND)));
+			XTime_GetTime(&t_est);
+		}
+
+		XTime_GetTime(&t_now);
+		if (1./cmd_hz <= ( 1.0 * (t_now - t_cmd) / (COUNTS_PER_SECOND) )) {
+			XTime_GetTime(&t_Tca);
+			Setpoint((_Float64)(1.0 * (t_now - t_cmd) / (COUNTS_PER_SECOND)));
+			XTime_GetTime(&t_cmd);
+		}
+
+		XTime_GetTime(&t_now);
+		if (1./ctrl_hz <= ( 1.0 * (t_now - t_ctrl) / (COUNTS_PER_SECOND) )) {
+			Ctrl((_Float64)(1.0 * (t_now - t_ctrl) / (COUNTS_PER_SECOND)),
+								(_Float64)(1.0 * (t_now - t_Ta) / (COUNTS_PER_SECOND)),
+								(_Float64)(1.0 * (t_now - t_Tca) / (COUNTS_PER_SECOND)));
+			XTime_GetTime(&t_ctrl);
+		}
+
+		for (int i=0;i<4;i++) {
+			XTime_GetTime(&t_now);
+			if (p_t[i] <= ( 1.0 * (t_now - t_p[i]) / (COUNTS_PER_SECOND) )) {
+				Plant(i, (_Float64)(1.0 * (t_now - t_Ta) / (COUNTS_PER_SECOND)));
+				XTime_GetTime(&t_p[i]);
+			}
+		}
+
+		XTime_GetTime(&t_now);
+		elapsed_time = 1.0 * (t_now - t_start) / (COUNTS_PER_SECOND);
+	}
+
+	SoftStop();
+	End();
+	return 0;
+}

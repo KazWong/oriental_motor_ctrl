@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Fri Apr 24 15:35:19 2020
+# Process ID: 23699
+# Current directory: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.runs/cpu_axi_gpio_1_0_synth_1
+# Command line: vivado -log cpu_axi_gpio_1_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source cpu_axi_gpio_1_0.tcl
+# Log file: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.runs/cpu_axi_gpio_1_0_synth_1/cpu_axi_gpio_1_0.vds
+# Journal file: /home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.runs/cpu_axi_gpio_1_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+source cpu_axi_gpio_1_0.tcl -notrace

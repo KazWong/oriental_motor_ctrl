@@ -1,0 +1,24 @@
+/*
+ * motion.h
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+
+#ifndef SRC_MOTION_H_
+#define SRC_MOTION_H_
+
+
+
+
+void SpeedOut(_Float64 dt);
+void Integrator(_Float64 dt);
+void Differentiator(_Float64 (*last)[4], _Float64 *vel, _Float64 *acc, _Float64 dt);
+void Setpoint(_Float64 dt);
+void Ctrl(_Float64 Ts, _Float64 fb_dt, _Float64 cmd_dt);
+void Plant(int idx, u8 dac_addr);
+void MotionInit();
+void MotorOFF();
+void SoftStop(u16 *dac);
+
+#endif /* SRC_MOTION_H_ */

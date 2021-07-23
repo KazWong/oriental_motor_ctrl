@@ -1,0 +1,252 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xbasic_types.h"
+
+#include "sleep.h"
+
+#include "motor_driver_pins.h"
+#include "motor_dac_ctrl.h"
+#include "zynq_can.h"
+
+u8 dac_val[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+XCanPs Can;
+
+u8 TxFrame[] = {'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'};
+u8 RECEIVED[] = {'1', '2', '3', '4', '5', '6', '7', 0x00};
+u8 START[] = {'s', 't', 'a', 'r', 't', '0', '0', '1'};
+u8 EXIT[] = {'5', '5', '5', '5', '5', '5', '5', '5'};
+u32 RxFrame[XCANPS_MAX_FRAME_SIZE_IN_WORDS] = {0};
+
+int main(void){
+	s32 Status;
+
+    init_platform();
+
+    print("Basic ZYNQ motor control test.\n\r");
+
+
+// Motor
+    zynq_to_motor_init();
+    dac_init_val();
+
+    dac_send_four_val(dac_val);
+    zynq_to_motor_ctrl(0x88, 0x88);
+
+    zynq_write_fw_bw_pins(emio_mot_a_fw, pin_off);
+    zynq_write_fw_bw_pins(emio_mot_a_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_b_fw, pin_off);
+    zynq_write_fw_bw_pins(emio_mot_b_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_c_fw, pin_off);
+    zynq_write_fw_bw_pins(emio_mot_c_bw, pin_off);
+
+    zynq_write_fw_bw_pins(emio_mot_d_fw, pin_off);
+    zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+
+
+// CAN
+    CanPsPolledExample(CAN_DEVICE_ID, &Can);
+
+    int count = 0;
+
+// Ready Msg
+    while (count < 10) {
+    START[7] = count;
+    Status = SendFrame(&Can, count, START, (u8) sizeof(START));
+    if (Status != XST_SUCCESS) {
+    	print("Send failed.\n\r");
+    	return XST_FAILURE;
+    }
+    count++;
+    usleep(1000);
+    }
+
+
+	//print("Sent, Receive Frame.\n");
+	count = 0;
+	u8 high_dac[4] = {0x0}, low_dac[4] = {0x0};
+	int dac[4] = {0}, MAX_DAC = 0x0FFF;
+	float Kp[4] = {1.0};
+	float Ki[4] = {0.0};
+	float Kd[4] = {0.0};
+	float Ts = 0.001;
+
+	float u[4][2];
+	float e[4][3];
+
+	while (count < 200) {
+		u16 x, y, z;
+		Xfloat32 vx, vy, vz;
+		Xfloat32 w[4], axis[4];
+		u8 *ptr_x, *ptr_y, *ptr_z, b;
+
+		ptr_x = &x;
+		ptr_y = &y;
+		ptr_z = &z;
+
+		Status = RecvFrame(&Can, 0x88, RxFrame, 100);
+		if (Status != XST_SUCCESS) {
+			print("Receive failed.\n\r");
+			Status = SendFrame(&Can, 0x01, TxFrame, (u8) sizeof(TxFrame));
+			count++;
+			continue;
+		}
+
+		axis[0] = 6.555456670490*(float)Xil_In32(0x41200000) / 131;
+		axis[1] = 6.555456670490*(float)Xil_In32(0x41200008) / 131;
+		axis[2] = 6.555456670490*(float)Xil_In32(0x41210000) / 131;
+		axis[3] = 6.555456670490*(float)Xil_In32(0x41210008) / 131;
+
+		u8 *FramePtr;
+		printf("%x ", RxFrame[0] >> XCANPS_IDR_ID1_SHIFT);
+		printf("%i ", RxFrame[1] >> XCANPS_DLCR_DLC_SHIFT);
+		FramePtr = (u8 *)(&RxFrame[2]);
+		for (int i=0;i<2;i++, ptr_x++, FramePtr++) {
+			*ptr_x = *FramePtr;
+			RECEIVED[i] = *FramePtr;
+		}
+		for (int i=0;i<2;i++, ptr_y++, FramePtr++) {
+			*ptr_y = *FramePtr;
+			RECEIVED[i+2] = *FramePtr;
+		}
+		for (int i=0;i<2;i++, ptr_z++, FramePtr++) {
+			*ptr_z = *FramePtr;
+			RECEIVED[i+4] = *FramePtr;
+		}
+		b = *FramePtr;
+		RECEIVED[6] = *FramePtr;
+
+		vx = ( (float)x / 65535.0 * 6.555456670490 ) * (1 - ((b & 0b100)>>1));
+		vy = ( (float)y / 65535.0 * 6.555456670490 ) * (1 - (b & 0b010));
+		vz = ( (float)z / 65535.0 * 6.555456670490 ) * (1 - ((b & 0b001)<<1));
+
+		w[0] = (vx - vy - (0.842)*vz) / 0.07825;
+		w[1] = (vx + vy + (0.842)*vz) / 0.07825;
+		w[2] = (vx + vy - (0.842)*vz) / 0.07825;
+		w[3] = (vx - vy + (0.842)*vz) / 0.07825;
+
+		/*for (int i=0; i<4; i++) {
+			e[i][0] = w[i] - axis[i];
+			u[i][0] = u[i][1] + Kp[i]*(e[i][0] - e[i][1]) + Ki[i]*Ts*(e[i][0]) + (Kd[i]/Ts)*(e[i][0] - 2*e[i][1] + e[i][2]);
+
+			u[i][1] = u[i][0];
+			e[i][2] = e[i][1];
+			e[i][1] = e[i][0];
+		}*/
+
+
+		if (w[0] > 0) {
+			zynq_write_fw_bw_pins(emio_mot_a_fw, pin_on);
+	    	zynq_write_fw_bw_pins(emio_mot_a_bw, pin_off);
+		} else if (w[0] < 0) {
+			zynq_write_fw_bw_pins(emio_mot_a_fw, pin_off);
+	    	zynq_write_fw_bw_pins(emio_mot_a_bw, pin_on);
+		}/*else {
+			zynq_write_fw_bw_pins(emio_mot_a_fw, pin_off);
+	    	zynq_write_fw_bw_pins(emio_mot_a_bw, pin_off);
+		}*/
+
+		if (w[1] > 0) {
+			zynq_write_fw_bw_pins(emio_mot_b_fw, pin_on);
+		   	zynq_write_fw_bw_pins(emio_mot_b_bw, pin_off);
+		} else if (w[1] < 0) {
+			zynq_write_fw_bw_pins(emio_mot_b_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_b_bw, pin_on);
+		}/*else {
+			zynq_write_fw_bw_pins(emio_mot_b_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_b_bw, pin_off);
+		}*/
+
+		if (w[2] > 0) {
+			zynq_write_fw_bw_pins(emio_mot_c_fw, pin_on);
+		   	zynq_write_fw_bw_pins(emio_mot_c_bw, pin_off);
+		} else if (w[2] < 0) {
+			zynq_write_fw_bw_pins(emio_mot_c_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_c_bw, pin_on);
+		}/*else {
+			zynq_write_fw_bw_pins(emio_mot_c_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_c_bw, pin_off);
+		}*/
+
+		if (w[3] > 0) {
+			zynq_write_fw_bw_pins(emio_mot_d_fw, pin_on);
+		   	zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+		} else if (w[3] < 0) {
+			zynq_write_fw_bw_pins(emio_mot_d_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_d_bw, pin_on);
+		}/*else {
+			zynq_write_fw_bw_pins(emio_mot_d_fw, pin_off);
+		   	zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+		}*/
+
+
+		for (int i=0; i<4; i++) {
+			//dac[i] = u[i][0] * 4095. / 6418.8790204786;
+			dac[i] = (int)(fabs(w[i]) * 4095. / 83.77580409572);
+			high_dac[i] = (dac[i] >> 8) & 0xFF;
+			low_dac[i] = dac[i] & 0xFF;
+
+			if ((MAX_DAC >= dac[i]) && (0x000 <= dac[i])) {
+				dac_val[2*i] = high_dac[i];
+				dac_val[2*i+1] = low_dac[i];
+			}
+		}
+		for (int i=0;i<8;i++)
+			RECEIVED[i] = dac_val[i];
+		Status = SendFrame(&Can, 0x22, RECEIVED, (u8) sizeof(RECEIVED));
+		dac_send_four_val(dac_val);
+
+		count++;
+		usleep(1000);
+	}
+
+	Status = SendFrame(&Can, 0x55, EXIT, (u8) sizeof(EXIT));
+
+/** Force stop **/
+	while (dac[0] > 0x0000 && dac[1] > 0x0000 && dac[2] > 0x0000 && dac[3] > 0x0000) {
+		for (int i=0; i<4; i++) {
+			if (low_dac[i] - 0xE >= 0x00)
+				low_dac[i] = low_dac[i] - 0xE;
+			else {
+				if (high_dac[i] > 0)
+					high_dac[i] = high_dac[i] - 1;
+				low_dac[i] = 0xFF + (char) (low_dac[i] - 0xE);
+			}
+
+			dac_val[2*i] = high_dac[i];
+			dac_val[2*i+1] = low_dac[i];
+			dac[i] = (high_dac[i] << 8) + low_dac[i];
+
+			if (dac[i] <= 0x0000) {
+				dac_val[2*i] = 0x00;
+				dac_val[2*i+1] = 0x00;
+				high_dac[i] = 0x00;
+				low_dac[i] = 0x00;
+				dac[i] = 0;
+			}
+		}
+
+		dac_send_four_val(dac_val);
+		usleep(10000);
+	}
+
+	zynq_write_fw_bw_pins(emio_mot_a_fw, pin_off);
+	zynq_write_fw_bw_pins(emio_mot_a_bw, pin_off);
+
+	zynq_write_fw_bw_pins(emio_mot_b_fw, pin_off);
+	zynq_write_fw_bw_pins(emio_mot_b_bw, pin_off);
+
+	zynq_write_fw_bw_pins(emio_mot_c_fw, pin_off);
+	zynq_write_fw_bw_pins(emio_mot_c_bw, pin_off);
+
+	zynq_write_fw_bw_pins(emio_mot_d_fw, pin_off);
+	zynq_write_fw_bw_pins(emio_mot_d_bw, pin_off);
+
+	Status = SendFrame(&Can, 0x66, EXIT, (u8) sizeof(EXIT));
+
+    cleanup_platform();
+    return 0;
+}

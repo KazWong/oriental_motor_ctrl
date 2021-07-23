@@ -1,0 +1,7 @@
+09:25:20 **** Clean-only build of configuration Debug for project CANOpen ****
+make clean 
+rm -rf  ./src/config.o ./src/main.o ./src/motor_dac.o ./src/motor_gpio.o ./src/motor_motion.o ./src/motor_rtl.o ./src/platform.o ./src/zynq_can.o  ./src/config.d ./src/main.d ./src/motor_dac.d ./src/motor_gpio.d ./src/motor_motion.d ./src/motor_rtl.d ./src/platform.d ./src/zynq_can.d  CANOpen.elf.size  CANOpen.elf
+ 
+
+09:25:21 Build Finished (took 409ms)
+

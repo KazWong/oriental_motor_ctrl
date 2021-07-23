@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="cpu_wrapper_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="axi_vip_pkg" />
+            <top_module name="cpu_wrapper" />
+            <top_module name="glbl" />
+            <top_module name="ipif_pkg" />
+            <top_module name="std" />
+            <top_module name="xil_common_vip_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="916000000001fs"></ZoomEndTime>
+      <Cursor1Time time="0fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="162"></NameColumnWidth>
+      <ValueColumnWidth column_width="75"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="9" />
+   <wvobject type="logic" fp_name="/cpu_wrapper/sys_clk">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/zynq_emio_tri_i_11">
+      <obj_property name="ElementShortName">zynq_emio_tri_i_11[11:11]</obj_property>
+      <obj_property name="ObjectShortName">zynq_emio_tri_i_11[11:11]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/zynq_emio_tri_i_20">
+      <obj_property name="ElementShortName">zynq_emio_tri_i_20[20:20]</obj_property>
+      <obj_property name="ObjectShortName">zynq_emio_tri_i_20[20:20]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/gpio_rtl_0">
+      <obj_property name="ElementShortName">gpio_rtl_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio_rtl_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/gpio_rtl_1">
+      <obj_property name="ElementShortName">gpio_rtl_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio_rtl_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/gpio_rtl_6">
+      <obj_property name="ElementShortName">gpio_rtl_6[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio_rtl_6[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/cpu_wrapper/gpio_rtl_7">
+      <obj_property name="ElementShortName">gpio_rtl_7[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio_rtl_7[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group142">
+      <obj_property name="label">est</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/cpu_wrapper/A/fixp_count">
+         <obj_property name="ElementShortName">fixp_count[31:0]</obj_property>
+         <obj_property name="ObjectShortName">fixp_count[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/cpu_wrapper/A/fixt_count">
+         <obj_property name="ElementShortName">fixt_count[31:0]</obj_property>
+         <obj_property name="ObjectShortName">fixt_count[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/timer_out">
+         <obj_property name="ElementShortName">timer_out</obj_property>
+         <obj_property name="ObjectShortName">timer_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/cpu_wrapper/A/ms_timer/q">
+         <obj_property name="ElementShortName">q[31:0]</obj_property>
+         <obj_property name="ObjectShortName">q[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/module_out">
+         <obj_property name="ElementShortName">module_out</obj_property>
+         <obj_property name="ObjectShortName">module_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/start_out">
+         <obj_property name="ElementShortName">start_out</obj_property>
+         <obj_property name="ObjectShortName">start_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/ms_clk">
+         <obj_property name="ElementShortName">ms_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/fixp_clk">
+         <obj_property name="ElementShortName">fixp_clk</obj_property>
+         <obj_property name="ObjectShortName">fixp_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/A/rst">
+         <obj_property name="ElementShortName">rst</obj_property>
+         <obj_property name="ObjectShortName">rst</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group18">
+      <obj_property name="label">combine</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/rst_tri">
+         <obj_property name="ElementShortName">rst_tri</obj_property>
+         <obj_property name="ObjectShortName">rst_tri</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/rst_pullup">
+         <obj_property name="ElementShortName">rst_pullup</obj_property>
+         <obj_property name="ObjectShortName">rst_pullup</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/timer_out">
+         <obj_property name="ElementShortName">timer_out</obj_property>
+         <obj_property name="ObjectShortName">timer_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/cpu_wrapper/D/ms_timer/q">
+         <obj_property name="ElementShortName">q[31:0]</obj_property>
+         <obj_property name="ObjectShortName">q[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/overtime_out">
+         <obj_property name="ElementShortName">overtime_out</obj_property>
+         <obj_property name="ObjectShortName">overtime_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/rst">
+         <obj_property name="ElementShortName">rst</obj_property>
+         <obj_property name="ObjectShortName">rst</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/nrst">
+         <obj_property name="ElementShortName">nrst</obj_property>
+         <obj_property name="ObjectShortName">nrst</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/cpu_wrapper/D/fixp_count">
+         <obj_property name="ElementShortName">fixp_count[31:0]</obj_property>
+         <obj_property name="ObjectShortName">fixp_count[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/cpu_wrapper/D/fixt_count">
+         <obj_property name="ElementShortName">fixt_count[31:0]</obj_property>
+         <obj_property name="ObjectShortName">fixt_count[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/ms_clk">
+         <obj_property name="ElementShortName">ms_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/cpu_wrapper/D/fixp_clk">
+         <obj_property name="ElementShortName">fixp_clk</obj_property>
+         <obj_property name="ObjectShortName">fixp_clk</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

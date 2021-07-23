@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="cpu_wrapper_hw_platform_0" key="programflash.hwplatform"/>
+	<item value="/home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sdk/BOOT.bin" key="cpu_wrapper_hw_platform_0-imgFile"/>
+	<item value="qspi-x4-single" key="cpu_wrapper_hw_platform_0-flashType"/>
+	<item value="Local" key="cpu_wrapper_hw_platform_0-target"/>
+	<item value="false" key="cpu_wrapper_hw_platform_0-blankCheck"/>
+	<item value="Auto Detect" key="cpu_wrapper_hw_platform_0-device"/>
+	<item value="" key="cpu_wrapper_hw_platform_0-offSet"/>
+	<item value="/home/whwong/Codes/xilinx/vivado/zynq_motor_basic_test.xpr/zynq_motor_ctrl/zynq_motor_ctrl.sdk/bootloader/Debug/bootloader.elf" key="cpu_wrapper_hw_platform_0-fsblFile"/>
+	<item value="false" key="cpu_wrapper_hw_platform_0-verifyFlash"/>
+</section>

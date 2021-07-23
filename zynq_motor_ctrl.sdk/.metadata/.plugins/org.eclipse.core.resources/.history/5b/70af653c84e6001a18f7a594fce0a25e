@@ -1,0 +1,238 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xil_types.h"
+
+#include "sleep.h"
+#include "xtime_l.h"
+
+#include "motor_dac_ctrl.h"
+#include "zynq_can.h"
+
+#include "motion.h"
+#include "canopen.h"
+
+
+_Float64 duration = 60000.0;
+XTime CANOpenOut;
+
+int Init() {
+	init_platform();
+	print("System Boot.\n\r");
+
+	CANOpenInit();
+	MotionInit();
+
+    return XST_SUCCESS;
+}
+
+void End() {
+	MotorOFF();
+    cleanup_platform();
+}
+
+void PushS(int id, _Float64 msg[4]) {
+	s16 int_s16 = 0;
+
+	int_s16 = 0;
+	PDOMsg_buffer[PDOMsg_buf_end_idx].cob_id = id;
+	PDOMsg_buffer[PDOMsg_buf_end_idx].size = 8;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(msg[i] * 100.);
+		PDOMsg_buffer[PDOMsg_buf_end_idx].msg[2*i] = *(ptr);
+		PDOMsg_buffer[PDOMsg_buf_end_idx].msg[2*i+1] = *(ptr+1);
+	}
+
+	PDOMsg_buf_end_idx += 1;
+	if (PDOMsg_buf_end_idx == 1024)
+		PDOMsg_buf_end_idx = 0;
+}
+
+void PushState(int id, _Float64 msg[4]) {
+	s16 int_s16 = 0;
+
+	int_s16 = 0;
+	PDOMsg_buffer[PDOMsg_buf_end_idx].cob_id = id;
+	PDOMsg_buffer[PDOMsg_buf_end_idx].size = 8;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * msg[i] / LIM_SPEED);
+		PDOMsg_buffer[PDOMsg_buf_end_idx].msg[2*i] = *(ptr);
+		PDOMsg_buffer[PDOMsg_buf_end_idx].msg[2*i+1] = *(ptr+1);
+	}
+
+	PDOMsg_buf_end_idx += 1;
+	if (PDOMsg_buf_end_idx == 1024)
+		PDOMsg_buf_end_idx = 0;
+}
+
+void PushOdom(int id, _Float64 msg) {
+	PDOMsg_buffer[PDOMsg_buf_end_idx].cob_id = id;
+	PDOMsg_buffer[PDOMsg_buf_end_idx].size = 4;
+	for (int i=0;i<4;i++) {
+		u8 *ptr = (u8*)&msg;
+		PDOMsg_buffer[PDOMsg_buf_end_idx].msg[i] = *(ptr+i);
+	}
+
+	PDOMsg_buf_end_idx += 1;
+	if (PDOMsg_buf_end_idx == 1024)
+		PDOMsg_buf_end_idx = 0;
+}
+
+void SendPDO() {
+	XTime t_now;
+
+	XTime_GetTime(&t_now);
+	if (FB_T <= ( 1.0 * (t_now - CANOpenOut) / (COUNTS_PER_SECOND) )) {
+		PushS(PDO_WHEEL_S, s);
+		PushState(PDO_WHEEL_A, a);
+		PushState(PDO_WHEEL_Y, a);
+		PushState(PDO_WHEEL_W, a);
+		PushOdom(PDO_ODOM_X, odom[0]);
+		PushOdom(PDO_ODOM_Y, odom[1]);
+		PushOdom(PDO_ODOM_Z, odom[2]);
+
+		for (int i=0;i<7;i++)
+			SendPDOMsg();
+
+		XTime_GetTime(&CANOpenOut);
+	}
+}
+
+void BDCmd(u8 opt) {
+	switch (opt) {
+	case 0xEF:
+		duration = 0;
+		break;
+	case 0xDD:
+		s[0] = s[1] = s[2] = s[3] = 0.0;
+		odom[0] = odom[1] = odom[2] = 0.0;
+		break;
+	case 0xDF:
+		u[0] = u[1] = u[2] = u[3] = 0.0;
+		break;
+	default:
+		break;
+	}
+	opt = 0x00;
+}
+
+u8 BootUp(u8 ret) {
+	switch (ret) {
+	case ENTRY:
+		//print("BootUp Entry.\n\r");
+		if (SoftStop_NonBlk() == XST_SUCCESS )
+			return DO;
+		else
+			return ENTRY;
+	case DO:
+		//print("BootUp Do.\n\r");
+		CANOpenBootUp();
+		MotorBootUp();
+		ClearMotionState();
+		ResetTimer();
+		XTime_GetTime(&CANOpenOut);
+		return EXIT;
+	case EXIT:
+		state = PREOP;
+		return ENTRY;
+	};
+	return 51;
+}
+
+
+u8 Reset(u8 ret) {
+	switch (ret) {
+	case ENTRY:
+		if (SoftStop_NonBlk() == XST_SUCCESS )
+			return DO;
+		else
+			return ENTRY;
+	case DO:
+		ClearMotionState();
+		return EXIT;
+	case EXIT:
+		state = BOOTUP;
+		return ENTRY;
+	};
+	return 51;
+}
+
+u8 Stopped(u8 ret) {
+	switch (ret) {
+	case ENTRY:
+		if (SoftStop_NonBlk() == XST_SUCCESS )
+			return DO;
+		else
+			return ENTRY;
+	case DO:
+		Sense();
+		return DO;
+	case EXIT:
+		return EXIT;
+	};
+	return 51;
+}
+
+u8 PreOp(u8 ret) {
+	switch (ret) {
+	case ENTRY:
+		if (SoftStop_NonBlk() == XST_SUCCESS ){
+			BootupMsg();
+			return DO;
+		} else
+			return ENTRY;
+	case DO:
+		Sense();
+		return DO;
+	case EXIT:
+		return EXIT;
+	};
+	return 51;
+}
+
+u8 Op(u8 ret) {
+	switch (ret) {
+	case ENTRY:
+		//return DO;
+	case DO:
+		Sense();
+		GetVel(vel_frame);
+		Ctrl_Plant();
+		SendPDO();
+		return DO;
+	case EXIT:
+		return EXIT;
+	};
+	return 51;
+}
+
+static inline int H(unsigned char B0) {
+	return ( (B0>>7)|(B0<<1) )&0x0F; //Magic
+}
+
+int main(void) {
+ 	XTime t_now, t_start;
+ 	double  elapsed_time = 0.0;
+ 	u8 (*state_machine[])(u8) = {0, PreOp, Op, Reset, Stopped, BootUp};
+
+	Init();
+
+	XTime_GetTime(&t_start);
+	while (elapsed_time < duration) {
+		RecvMsg();
+
+		//BD Command
+		BDCmd(cmd_opt);
+		//Change state
+		state_ret = state_machine[H(state)](state_ret);
+
+		XTime_GetTime(&t_now);
+		elapsed_time = 1.0 * (t_now - t_start) / (COUNTS_PER_SECOND);
+	}
+
+	SoftStop();
+	End();
+	return 1;
+}

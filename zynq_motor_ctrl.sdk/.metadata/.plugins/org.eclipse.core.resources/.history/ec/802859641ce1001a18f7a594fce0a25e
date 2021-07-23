@@ -1,0 +1,16 @@
+/*
+ * canopen.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "zynq_can.h"
+
+#include "canopen.h"
+
+XCanPs Can;
+
+void BootupMsg() {
+
+
+}

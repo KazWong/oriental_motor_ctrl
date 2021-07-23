@@ -1,0 +1,79 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Fri Apr 24 15:34:23 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : upgrade_ip
+| Device       : xc7z020clg484-2
+--------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cpu_rst_ps7_0_50M_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cpu_rst_ps7_0_50M_0 (xilinx.com:ip:proc_sys_reset:5.0) from (Rev. 12) to (Rev. 13)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Fri Apr 24 15:34:23 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : upgrade_ip
+| Device       : xc7z020clg484-2
+--------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cpu_ps7_0_axi_periph_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cpu_ps7_0_axi_periph_0 (xilinx.com:ip:axi_interconnect:2.1) from (Rev. 18) to (Rev. 19)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Fri Apr 24 15:34:22 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : upgrade_ip
+| Device       : xc7z020clg484-2
+--------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cpu_axi_gpio_1_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cpu_axi_gpio_1_0 (xilinx.com:ip:axi_gpio:2.0) from (Rev. 19) to (Rev. 20)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Fri Apr 24 15:34:22 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : upgrade_ip
+| Device       : xc7z020clg484-2
+--------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cpu_axi_gpio_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cpu_axi_gpio_0_0 (xilinx.com:ip:axi_gpio:2.0) from (Rev. 19) to (Rev. 20)
+

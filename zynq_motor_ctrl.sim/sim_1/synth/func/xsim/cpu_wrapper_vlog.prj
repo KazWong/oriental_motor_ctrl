@@ -1,0 +1,6 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/ec67/hdl" --include "../../../../../zynq_motor_ctrl.srcs/sources_1/bd/cpu/ipshared/70cf/hdl" --include "/opt/Xilinx/Vivado/2018.3/data/xilinx_vip/include" \
+"cpu_wrapper_func_synth.v" \
+
+# Do not sort compile order
+nosort

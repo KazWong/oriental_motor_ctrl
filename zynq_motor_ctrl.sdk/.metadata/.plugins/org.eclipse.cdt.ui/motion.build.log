@@ -1,0 +1,37 @@
+14:20:19 **** Auto Build of configuration Debug for project motion ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../motion_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+In file included from ../src/main.cc:4:0:
+../../motion_bsp/ps7_cortexa9_0/include/xbasic_types.h:115:2: warning: #warning The xbasics_type.h file is deprecated and users should use xil_types.h and xil_assert. [-Wcpp]
+ #warning  The xbasics_type.h file is deprecated and users should use xil_types.h and xil_assert.
+  ^~~~~~~
+../../motion_bsp/ps7_cortexa9_0/include/xbasic_types.h:116:2: warning: #warning Please refer the Standalone BSP UG647 for further details [-Wcpp]
+ #warning  Please refer the Standalone BSP UG647 for further details
+  ^~~~~~~
+../src/main.cc: In function 'int main()':
+../src/main.cc:85:51: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'u32 {aka long unsigned int}' [-Wformat=]
+   printf("%x ", RxFrame[0] >> XCANPS_IDR_ID1_SHIFT);
+                                                   ^
+../src/main.cc:86:52: warning: format '%i' expects argument of type 'int', but argument 2 has type 'u32 {aka long unsigned int}' [-Wformat=]
+   printf("%i ", RxFrame[1] >> XCANPS_DLCR_DLC_SHIFT);
+                                                    ^
+Finished building: ../src/main.cc
+ 
+Building target: motion.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../motion_bsp/ps7_cortexa9_0/lib -o "motion.elf"  ./src/main.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: motion.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size motion.elf  |tee "motion.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 108284	   2648	  23800	 134732	  20e4c	motion.elf
+Finished building: motion.elf.size
+ 
+
+14:20:19 Build Finished (took 564ms)
+

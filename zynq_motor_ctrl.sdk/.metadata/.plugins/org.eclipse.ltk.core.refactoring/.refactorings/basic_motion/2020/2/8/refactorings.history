@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;basic_motion/src/motion_ctrl&apos; to &apos;motion_ctrl.h&apos;" description="Rename resource &apos;motion_ctrl&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/motion_ctrl" name="motion_ctrl.h" stamp="1582178977694" updateReferences="true"/>
+</session>

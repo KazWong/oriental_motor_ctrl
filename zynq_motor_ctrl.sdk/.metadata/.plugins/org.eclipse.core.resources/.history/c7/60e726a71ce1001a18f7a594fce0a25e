@@ -1,0 +1,17 @@
+/*
+ * canopen.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "zynq_can.h"
+
+#include "canopen.h"
+
+XCanPs Can;
+
+void BootupMsg() {
+	u8 bootup[] = {0x00};
+
+	SendFrame(&Can, 0x700+NODE_ID, bootup, (u8) sizeof(bootup));
+}

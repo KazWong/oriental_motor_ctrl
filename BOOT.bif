@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]/home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.sdk/bootloader/Debug/bootloader.elf
+	/home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.runs/impl_1/cpu_wrapper.bit
+	/home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.sdk/CAN_direct/Debug/CAN_direct.elf
+}

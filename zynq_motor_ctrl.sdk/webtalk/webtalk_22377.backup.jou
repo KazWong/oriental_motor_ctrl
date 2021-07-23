@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
+# 
+# Start of session at: Tue Jul  6 17:26:42 2021
+# Process ID: 22377
+# Current directory: /home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.sdk/webtalk
+# Command line: wbtcv -mode batch -source sdk_webtalk.tcl
+# Log file: /home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.sdk/webtalk/webtalk.log
+# Journal file: /home/whwong/Codes/xilinx/vivado/zynq_motor_ctrl/zynq_motor_ctrl.sdk/webtalk/webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl

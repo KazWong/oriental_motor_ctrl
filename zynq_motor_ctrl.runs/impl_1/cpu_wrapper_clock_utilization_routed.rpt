@@ -1,0 +1,609 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3.1 (lin64) Build 2489853 Tue Mar 26 04:18:30 MDT 2019
+| Date         : Tue Jun  2 09:58:08 2020
+| Host         : GL504GW running 64-bit Ubuntu 18.04.4 LTS
+| Command      : report_clock_utilization -file cpu_wrapper_clock_utilization_routed.rpt
+| Design       : cpu_wrapper
+| Device       : 7z020-clg484
+| Speed File   : -2  PRODUCTION 1.11 2014-09-11
+-----------------------------------------------------------------------------------------
+
+Clock Utilization Report
+
+Table of Contents
+-----------------
+1. Clock Primitive Utilization
+2. Global Clock Resources
+3. Global Clock Source Details
+4. Local Clock Details
+5. Clock Regions: Key Resource Utilization
+6. Clock Regions : Global Clock Summary
+7. Device Cell Placement Summary for Global Clock g0
+8. Device Cell Placement Summary for Global Clock g1
+9. Device Cell Placement Summary for Global Clock g2
+10. Device Cell Placement Summary for Global Clock g3
+11. Device Cell Placement Summary for Global Clock g4
+12. Device Cell Placement Summary for Global Clock g5
+13. Clock Region Cell Placement per Global Clock: Region X0Y0
+14. Clock Region Cell Placement per Global Clock: Region X1Y0
+15. Clock Region Cell Placement per Global Clock: Region X0Y1
+16. Clock Region Cell Placement per Global Clock: Region X1Y1
+17. Clock Region Cell Placement per Global Clock: Region X0Y2
+18. Clock Region Cell Placement per Global Clock: Region X1Y2
+
+1. Clock Primitive Utilization
+------------------------------
+
++----------+------+-----------+-----+--------------+--------+
+| Type     | Used | Available | LOC | Clock Region | Pblock |
++----------+------+-----------+-----+--------------+--------+
+| BUFGCTRL |    6 |        32 |   0 |            0 |      0 |
+| BUFH     |    0 |        72 |   0 |            0 |      0 |
+| BUFIO    |    0 |        16 |   0 |            0 |      0 |
+| BUFMR    |    0 |         8 |   0 |            0 |      0 |
+| BUFR     |    0 |        16 |   0 |            0 |      0 |
+| MMCM     |    0 |         4 |   0 |            0 |      0 |
+| PLL      |    0 |         4 |   0 |            0 |      0 |
++----------+------+-----------+-----+--------------+--------+
+
+
+2. Global Clock Resources
+-------------------------
+
++-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+------------+---------------------------------------------------------------------+-------------------------------------------+
+| Global Id | Source Id | Driver Type/Pin | Constraint | Site           | Clock Region | Load Clock Region | Clock Loads | Non-Clock Loads | Clock Period | Clock      | Driver Pin                                                          | Net                                       |
++-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+------------+---------------------------------------------------------------------+-------------------------------------------+
+| g0        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y16 | n/a          |                 4 |        1838 |               0 |       20.000 | clk_fpga_0 | cpu_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
+| g1        | src1      | BUFG/O          | None       | BUFGCTRL_X0Y0  | n/a          |                 3 |         152 |               0 |              |            | sys_clk_IBUF_BUFG_inst/O                                            | sys_clk_IBUF_BUFG                         |
+| g2        | src2      | BUFG/O          | None       | BUFGCTRL_X0Y1  | n/a          |                 6 |          32 |              61 |              |            | q2_reg_i_2/O                                                        | rst                                       |
+| g3        | src3      | BUFG/O          | None       | BUFGCTRL_X0Y2  | n/a          |                 5 |          32 |              61 |              |            | q2_reg_i_2__0/O                                                     | rst_0                                     |
+| g4        | src4      | BUFG/O          | None       | BUFGCTRL_X0Y3  | n/a          |                 6 |          32 |              61 |              |            | q2_reg_i_2__1/O                                                     | rst_1                                     |
+| g5        | src5      | BUFG/O          | None       | BUFGCTRL_X0Y4  | n/a          |                 5 |          32 |              61 |              |            | q2_reg_i_2__2/O                                                     | rst_2                                     |
++-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+------------+---------------------------------------------------------------------+-------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+
+
+3. Global Clock Source Details
+------------------------------
+
++-----------+-----------+-----------------+------------+--------------+--------------+-------------+-----------------+---------------------+--------------+--------------------------------------------------+--------------------------------------------------------+
+| Source Id | Global Id | Driver Type/Pin | Constraint | Site         | Clock Region | Clock Loads | Non-Clock Loads | Source Clock Period | Source Clock | Driver Pin                                       | Net                                                    |
++-----------+-----------+-----------------+------------+--------------+--------------+-------------+-----------------+---------------------+--------------+--------------------------------------------------+--------------------------------------------------------+
+| src0      | g0        | PS7/FCLKCLK[0]  | PS7_X0Y0   | PS7_X0Y0     | X0Y2         |           1 |               0 |              20.000 | clk_fpga_0   | cpu_i/processing_system7_0/inst/PS7_i/FCLKCLK[0] | cpu_i/processing_system7_0/inst/FCLK_CLK_unbuffered[0] |
+| src1      | g1        | IBUF/O          | IOB_X0Y26  | IOB_X0Y26    | X0Y0         |           1 |               0 |                     |              | sys_clk_IBUF_inst/O                              | sys_clk_IBUF                                           |
+| src2      | g2        | LUT6/O          | None       | SLICE_X49Y48 | X0Y0         |           1 |               0 |                     |              | A/ms_timer/counter/dff_00/q2_i_3/O               | A/ms_timer/counter/dff_00/q_reg_1                      |
+| src3      | g3        | LUT6/O          | None       | SLICE_X52Y46 | X1Y0         |           1 |               0 |                     |              | B/ms_timer/counter/dff_00/q2_i_3__0/O            | B/ms_timer/counter/dff_00/q_reg_1                      |
+| src4      | g4        | LUT6/O          | None       | SLICE_X50Y44 | X1Y0         |           1 |               0 |                     |              | C/ms_timer/counter/dff_00/q2_i_3__1/O            | C/ms_timer/counter/dff_00/q_reg_1                      |
+| src5      | g5        | LUT6/O          | None       | SLICE_X49Y47 | X0Y0         |           1 |               0 |                     |              | D/ms_timer/counter/dff_00/q2_i_3__2/O            | D/ms_timer/counter/dff_00/q_reg_1                      |
++-----------+-----------+-----------------+------------+--------------+--------------+-------------+-----------------+---------------------+--------------+--------------------------------------------------+--------------------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+
+
+4. Local Clock Details
+----------------------
+
++----------+-----------------+------------+--------------------+--------------+-------------+-----------------+--------------+-------+----------------------------------------------+----------------------------------------------+
+| Local Id | Driver Type/Pin | Constraint | Site/BEL           | Clock Region | Clock Loads | Non-Clock Loads | Clock Period | Clock | Driver Pin                                   | Net                                          |
++----------+-----------------+------------+--------------------+--------------+-------------+-----------------+--------------+-------+----------------------------------------------+----------------------------------------------||
+| 0        | FDCE/Q          | None       | SLICE_X50Y89/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[10].dff_/q_reg/Q          | A/fixP_counter/bit[10].dff_/D[0]             - Static -
+| 1        | FDCE/Q          | None       | SLICE_X50Y90/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[11].dff_/q_reg/Q          | A/fixP_counter/bit[11].dff_/D[0]             - Static -
+| 2        | FDCE/Q          | None       | SLICE_X51Y90/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[12].dff_/q_reg/Q          | A/fixP_counter/bit[12].dff_/D[0]             - Static -
+| 3        | FDCE/Q          | None       | SLICE_X50Y91/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[13].dff_/q_reg/Q          | A/fixP_counter/bit[13].dff_/D[0]             - Static -
+| 4        | FDCE/Q          | None       | SLICE_X50Y101/AFF  | X1Y2         |           1 |               2 |              |       | A/fixP_counter/bit[14].dff_/q_reg/Q          | A/fixP_counter/bit[14].dff_/D[0]             - Static -
+| 5        | FDCE/Q          | None       | SLICE_X50Y102/AFF  | X1Y2         |           1 |               2 |              |       | A/fixP_counter/bit[15].dff_/q_reg/Q          | A/fixP_counter/bit[15].dff_/D[0]             - Static -
+| 6        | FDCE/Q          | None       | SLICE_X50Y99/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[16].dff_/q_reg/Q          | A/fixP_counter/bit[16].dff_/D[0]             - Static -
+| 7        | FDCE/Q          | None       | SLICE_X49Y99/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[17].dff_/q_reg/Q          | A/fixP_counter/bit[17].dff_/D[0]             - Static -
+| 8        | FDCE/Q          | None       | SLICE_X46Y86/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[1].dff_/q_reg/Q           | A/fixP_counter/bit[1].dff_/D[0]              - Static -
+| 9        | FDCE/Q          | None       | SLICE_X48Y86/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[2].dff_/q_reg/Q           | A/fixP_counter/bit[2].dff_/D[0]              - Static -
+| 10       | FDCE/Q          | None       | SLICE_X49Y86/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[3].dff_/q_reg/Q           | A/fixP_counter/bit[3].dff_/D[0]              - Static -
+| 11       | FDCE/Q          | None       | SLICE_X48Y87/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[4].dff_/q_reg/Q           | A/fixP_counter/bit[4].dff_/D[0]              - Static -
+| 12       | FDCE/Q          | None       | SLICE_X49Y87/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[5].dff_/q_reg/Q           | A/fixP_counter/bit[5].dff_/D[0]              - Static -
+| 13       | FDCE/Q          | None       | SLICE_X47Y87/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/bit[6].dff_/q_reg/Q           | A/fixP_counter/bit[6].dff_/D[0]              - Static -
+| 14       | FDCE/Q          | None       | SLICE_X50Y87/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[7].dff_/q_reg/Q           | A/fixP_counter/bit[7].dff_/D[0]              - Static -
+| 15       | FDCE/Q          | None       | SLICE_X52Y89/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[8].dff_/q_reg/Q           | A/fixP_counter/bit[8].dff_/D[0]              - Static -
+| 16       | FDCE/Q          | None       | SLICE_X51Y89/AFF   | X1Y1         |           1 |               2 |              |       | A/fixP_counter/bit[9].dff_/q_reg/Q           | A/fixP_counter/bit[9].dff_/D[0]              - Static -
+| 17       | FDCE/Q          | None       | SLICE_X44Y85/AFF   | X0Y1         |           1 |               2 |              |       | A/fixP_counter/dff_00/q_reg/Q                | A/fixP_counter/dff_00/D[0]                   - Static -
+| 18       | FDCE/Q          | None       | SLICE_X38Y108/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[10].dff_/q_reg/Q          | A/fixT_counter/bit[10].dff_/D[0]             - Static -
+| 19       | FDCE/Q          | None       | SLICE_X39Y108/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[11].dff_/q_reg/Q          | A/fixT_counter/bit[11].dff_/D[0]             - Static -
+| 20       | FDCE/Q          | None       | SLICE_X47Y105/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[1].dff_/q_reg/Q           | A/fixT_counter/bit[1].dff_/D[0]              - Static -
+| 21       | FDCE/Q          | None       | SLICE_X47Y106/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[2].dff_/q_reg/Q           | A/fixT_counter/bit[2].dff_/D[0]              - Static -
+| 22       | FDCE/Q          | None       | SLICE_X47Y107/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[3].dff_/q_reg/Q           | A/fixT_counter/bit[3].dff_/D[0]              - Static -
+| 23       | FDCE/Q          | None       | SLICE_X40Y106/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[4].dff_/q_reg/Q           | A/fixT_counter/bit[4].dff_/D[0]              - Static -
+| 24       | FDCE/Q          | None       | SLICE_X38Y107/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[5].dff_/q_reg/Q           | A/fixT_counter/bit[5].dff_/D[0]              - Static -
+| 25       | FDCE/Q          | None       | SLICE_X37Y107/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[6].dff_/q_reg/Q           | A/fixT_counter/bit[6].dff_/D[0]              - Static -
+| 26       | FDCE/Q          | None       | SLICE_X36Y108/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[7].dff_/q_reg/Q           | A/fixT_counter/bit[7].dff_/D[0]              - Static -
+| 27       | FDCE/Q          | None       | SLICE_X37Y108/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[8].dff_/q_reg/Q           | A/fixT_counter/bit[8].dff_/D[0]              - Static -
+| 28       | FDCE/Q          | None       | SLICE_X38Y109/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/bit[9].dff_/q_reg/Q           | A/fixT_counter/bit[9].dff_/D[0]              - Static -
+| 29       | FDCE/Q          | None       | SLICE_X46Y105/AFF  | X0Y2         |           1 |               2 |              |       | A/fixT_counter/dff_00/q_reg/Q                | A/fixT_counter/dff_00/D[0]                   - Static -
+| 30       | FDCE/Q          | None       | SLICE_X46Y49/AFF   | X0Y0         |           1 |               1 |              |       | A/ms_clkdiv/clk_track_reg/Q                  | A/ms_clkdiv/clk_track                        - Static -
+| 31       | FDCE/Q          | None       | SLICE_X50Y48/AFF   | X1Y0         |           1 |               3 |              |       | A/ms_timer/counter/bit[1].dff_/q_reg/Q       | A/ms_timer/counter/bit[1].dff_/q_reg_0[0]    - Static -
+| 32       | FDCE/Q          | None       | SLICE_X48Y48/AFF   | X0Y0         |           1 |               3 |              |       | A/ms_timer/counter/bit[2].dff_/q_reg/Q       | A/ms_timer/counter/bit[2].dff_/q_reg_0[0]    - Static -
+| 33       | FDCE/Q          | None       | SLICE_X47Y49/AFF   | X0Y0         |           1 |               3 |              |       | A/ms_timer/counter/bit[3].dff_/q_reg/Q       | A/ms_timer/counter/bit[3].dff_/q_reg_0[0]    - Static -
+| 34       | FDCE/Q          | None       | SLICE_X46Y50/AFF   | X0Y1         |           1 |               2 |              |       | A/ms_timer/counter/bit[4].dff_/q_reg/Q       | A/ms_timer/counter/bit[4].dff_/q_reg_0[0]    - Static -
+| 35       | FDCE/Q          | None       | SLICE_X41Y50/AFF   | X0Y1         |           1 |               2 |              |       | A/ms_timer/counter/bit[5].dff_/q_reg/Q       | A/ms_timer/counter/bit[5].dff_/q_reg_0[0]    - Static -
+| 36       | FDCE/Q          | None       | SLICE_X42Y50/AFF   | X0Y1         |           1 |               2 |              |       | A/ms_timer/counter/bit[6].dff_/q_reg/Q       | A/ms_timer/counter/bit[6].dff_/q_reg_0[0]    - Static -
+| 37       | FDCE/Q          | None       | SLICE_X50Y49/AFF   | X1Y0         |           1 |               3 |              |       | A/ms_timer/counter/dff_00/q_reg/Q            | A/ms_timer/counter/dff_00/q_reg_0[0]         - Static -
+| 38       | FDCE/Q          | None       | SLICE_X47Y50/AFF   | X0Y1         |           1 |               1 |              |       | A/overtime_clkdiv/clk_track_reg/Q            | A/overtime_clkdiv/clk_track_reg_0            - Static -
+| 39       | FDCE/Q          | None       | SLICE_X46Y51/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/bit[1].dff_/q_reg/Q | A/overtime_timer/counter/bit[1].dff_/q_reg_0 - Static -
+| 40       | FDCE/Q          | None       | SLICE_X46Y52/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/bit[2].dff_/q_reg/Q | A/overtime_timer/counter/bit[2].dff_/q_reg_0 - Static -
+| 41       | FDCE/Q          | None       | SLICE_X46Y53/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/bit[3].dff_/q_reg/Q | A/overtime_timer/counter/bit[3].dff_/q_reg_0 - Static -
+| 42       | FDCE/Q          | None       | SLICE_X47Y53/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/bit[4].dff_/q_reg/Q | A/overtime_timer/counter/bit[4].dff_/q_reg_0 - Static -
+| 43       | FDCE/Q          | None       | SLICE_X47Y52/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/bit[5].dff_/q_reg/Q | A/overtime_timer/counter/bit[5].dff_/q_reg_0 - Static -
+| 44       | FDCE/Q          | None       | SLICE_X47Y48/AFF   | X0Y0         |           1 |               2 |              |       | A/overtime_timer/counter/bit[6].dff_/q_reg/Q | A/overtime_timer/counter/bit[6].dff_/q_reg_0 - Static -
+| 45       | FDCE/Q          | None       | SLICE_X47Y51/AFF   | X0Y1         |           1 |               2 |              |       | A/overtime_timer/counter/dff_00/q_reg/Q      | A/overtime_timer/counter/dff_00/q_reg_0      - Static -
+| 46       | FDCE/Q          | None       | SLICE_X51Y88/AFF   | X1Y1         |           1 |               2 |              |       | B/fixP_counter/bit[10].dff_/q_reg/Q          | B/fixP_counter/bit[10].dff_/D[0]             - Static -
+| 47       | FDCE/Q          | None       | SLICE_X50Y88/AFF   | X1Y1         |           1 |               2 |              |       | B/fixP_counter/bit[11].dff_/q_reg/Q          | B/fixP_counter/bit[11].dff_/D[0]             - Static -
+| 48       | FDCE/Q          | None       | SLICE_X50Y95/AFF   | X1Y1         |           1 |               2 |              |       | B/fixP_counter/bit[12].dff_/q_reg/Q          | B/fixP_counter/bit[12].dff_/D[0]             - Static -
+| 49       | FDCE/Q          | None       | SLICE_X51Y96/AFF   | X1Y1         |           1 |               2 |              |       | B/fixP_counter/bit[13].dff_/q_reg/Q          | B/fixP_counter/bit[13].dff_/D[0]             - Static -
+| 50       | FDCE/Q          | None       | SLICE_X52Y101/AFF  | X1Y2         |           1 |               2 |              |       | B/fixP_counter/bit[14].dff_/q_reg/Q          | B/fixP_counter/bit[14].dff_/D[0]             - Static -
+| 51       | FDCE/Q          | None       | SLICE_X50Y105/AFF  | X1Y2         |           1 |               2 |              |       | B/fixP_counter/bit[15].dff_/q_reg/Q          | B/fixP_counter/bit[15].dff_/D[0]             - Static -
+| 52       | FDCE/Q          | None       | SLICE_X50Y104/AFF  | X1Y2         |           1 |               2 |              |       | B/fixP_counter/bit[16].dff_/q_reg/Q          | B/fixP_counter/bit[16].dff_/D[0]             - Static -
+| 53       | FDCE/Q          | None       | SLICE_X50Y103/AFF  | X1Y2         |           1 |               2 |              |       | B/fixP_counter/bit[17].dff_/q_reg/Q          | B/fixP_counter/bit[17].dff_/D[0]             - Static -
+| 54       | FDCE/Q          | None       | SLICE_X43Y85/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[1].dff_/q_reg/Q           | B/fixP_counter/bit[1].dff_/D[0]              - Static -
+| 55       | FDCE/Q          | None       | SLICE_X43Y87/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[2].dff_/q_reg/Q           | B/fixP_counter/bit[2].dff_/D[0]              - Static -
+| 56       | FDCE/Q          | None       | SLICE_X45Y89/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[3].dff_/q_reg/Q           | B/fixP_counter/bit[3].dff_/D[0]              - Static -
+| 57       | FDCE/Q          | None       | SLICE_X46Y89/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[4].dff_/q_reg/Q           | B/fixP_counter/bit[4].dff_/D[0]              - Static -
+| 58       | FDCE/Q          | None       | SLICE_X44Y87/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[5].dff_/q_reg/Q           | B/fixP_counter/bit[5].dff_/D[0]              - Static -
+| 59       | FDCE/Q          | None       | SLICE_X44Y88/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[6].dff_/q_reg/Q           | B/fixP_counter/bit[6].dff_/D[0]              - Static -
+| 60       | FDCE/Q          | None       | SLICE_X45Y88/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[7].dff_/q_reg/Q           | B/fixP_counter/bit[7].dff_/D[0]              - Static -
+| 61       | FDCE/Q          | None       | SLICE_X48Y89/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/bit[8].dff_/q_reg/Q           | B/fixP_counter/bit[8].dff_/D[0]              - Static -
+| 62       | FDCE/Q          | None       | SLICE_X51Y87/AFF   | X1Y1         |           1 |               2 |              |       | B/fixP_counter/bit[9].dff_/q_reg/Q           | B/fixP_counter/bit[9].dff_/D[0]              - Static -
+| 63       | FDCE/Q          | None       | SLICE_X40Y84/AFF   | X0Y1         |           1 |               2 |              |       | B/fixP_counter/dff_00/q_reg/Q                | B/fixP_counter/dff_00/D[0]                   - Static -
+| 64       | FDCE/Q          | None       | SLICE_X33Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[10].dff_/q_reg/Q          | B/fixT_counter/bit[10].dff_/D[0]             - Static -
+| 65       | FDCE/Q          | None       | SLICE_X33Y105/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[11].dff_/q_reg/Q          | B/fixT_counter/bit[11].dff_/D[0]             - Static -
+| 66       | FDCE/Q          | None       | SLICE_X49Y105/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[1].dff_/q_reg/Q           | B/fixT_counter/bit[1].dff_/D[0]              - Static -
+| 67       | FDCE/Q          | None       | SLICE_X48Y105/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[2].dff_/q_reg/Q           | B/fixT_counter/bit[2].dff_/D[0]              - Static -
+| 68       | FDCE/Q          | None       | SLICE_X47Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[3].dff_/q_reg/Q           | B/fixT_counter/bit[3].dff_/D[0]              - Static -
+| 69       | FDCE/Q          | None       | SLICE_X45Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[4].dff_/q_reg/Q           | B/fixT_counter/bit[4].dff_/D[0]              - Static -
+| 70       | FDCE/Q          | None       | SLICE_X44Y105/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[5].dff_/q_reg/Q           | B/fixT_counter/bit[5].dff_/D[0]              - Static -
+| 71       | FDCE/Q          | None       | SLICE_X40Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[6].dff_/q_reg/Q           | B/fixT_counter/bit[6].dff_/D[0]              - Static -
+| 72       | FDCE/Q          | None       | SLICE_X38Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[7].dff_/q_reg/Q           | B/fixT_counter/bit[7].dff_/D[0]              - Static -
+| 73       | FDCE/Q          | None       | SLICE_X39Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[8].dff_/q_reg/Q           | B/fixT_counter/bit[8].dff_/D[0]              - Static -
+| 74       | FDCE/Q          | None       | SLICE_X36Y104/AFF  | X0Y2         |           1 |               2 |              |       | B/fixT_counter/bit[9].dff_/q_reg/Q           | B/fixT_counter/bit[9].dff_/D[0]              - Static -
+| 75       | FDCE/Q          | None       | SLICE_X50Y106/AFF  | X1Y2         |           1 |               2 |              |       | B/fixT_counter/dff_00/q_reg/Q                | B/fixT_counter/dff_00/D[0]                   - Static -
+| 76       | FDCE/Q          | None       | SLICE_X60Y45/AFF   | X1Y0         |           1 |               1 |              |       | B/ms_clkdiv/clk_track_reg/Q                  | B/ms_clkdiv/clk_track_reg_0                  - Static -
+| 77       | FDCE/Q          | None       | SLICE_X53Y46/AFF   | X1Y0         |           1 |               3 |              |       | B/ms_timer/counter/bit[1].dff_/q_reg/Q       | B/ms_timer/counter/bit[1].dff_/q_reg_0       - Static -
+| 78       | FDCE/Q          | None       | SLICE_X52Y47/AFF   | X1Y0         |           1 |               3 |              |       | B/ms_timer/counter/bit[2].dff_/q_reg/Q       | B/ms_timer/counter/bit[2].dff_/q_reg_0       - Static -
+| 79       | FDCE/Q          | None       | SLICE_X52Y46/AFF   | X1Y0         |           1 |               3 |              |       | B/ms_timer/counter/bit[3].dff_/q_reg/Q       | B/ms_timer/counter/bit[3].dff_/q_reg_0       - Static -
+| 80       | FDCE/Q          | None       | SLICE_X52Y45/AFF   | X1Y0         |           1 |               2 |              |       | B/ms_timer/counter/bit[4].dff_/q_reg/Q       | B/ms_timer/counter/bit[4].dff_/q_reg_0       - Static -
+| 81       | FDCE/Q          | None       | SLICE_X52Y44/AFF   | X1Y0         |           1 |               2 |              |       | B/ms_timer/counter/bit[5].dff_/q_reg/Q       | B/ms_timer/counter/bit[5].dff_/q_reg_0       - Static -
+| 82       | FDCE/Q          | None       | SLICE_X53Y44/AFF   | X1Y0         |           1 |               2 |              |       | B/ms_timer/counter/bit[6].dff_/q_reg/Q       | B/ms_timer/counter/bit[6].dff_/q_reg_0       - Static -
+| 83       | FDCE/Q          | None       | SLICE_X54Y45/AFF   | X1Y0         |           1 |               3 |              |       | B/ms_timer/counter/dff_00/q_reg/Q            | B/ms_timer/counter/dff_00/q_reg_0            - Static -
+| 84       | FDCE/Q          | None       | SLICE_X55Y49/AFF   | X1Y0         |           1 |               1 |              |       | B/overtime_clkdiv/clk_track_reg/Q            | B/overtime_clkdiv/clk_track_reg_0            - Static -
+| 85       | FDCE/Q          | None       | SLICE_X55Y47/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[1].dff_/q_reg/Q | B/overtime_timer/counter/bit[1].dff_/q_reg_0 - Static -
+| 86       | FDCE/Q          | None       | SLICE_X54Y46/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[2].dff_/q_reg/Q | B/overtime_timer/counter/bit[2].dff_/q_reg_0 - Static -
+| 87       | FDCE/Q          | None       | SLICE_X54Y47/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[3].dff_/q_reg/Q | B/overtime_timer/counter/bit[3].dff_/q_reg_0 - Static -
+| 88       | FDCE/Q          | None       | SLICE_X54Y48/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[4].dff_/q_reg/Q | B/overtime_timer/counter/bit[4].dff_/q_reg_0 - Static -
+| 89       | FDCE/Q          | None       | SLICE_X53Y48/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[5].dff_/q_reg/Q | B/overtime_timer/counter/bit[5].dff_/q_reg_0 - Static -
+| 90       | FDCE/Q          | None       | SLICE_X52Y48/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/bit[6].dff_/q_reg/Q | B/overtime_timer/counter/bit[6].dff_/q_reg_0 - Static -
+| 91       | FDCE/Q          | None       | SLICE_X55Y48/AFF   | X1Y0         |           1 |               2 |              |       | B/overtime_timer/counter/dff_00/q_reg/Q      | B/overtime_timer/counter/dff_00/q_reg_0      - Static -
+| 92       | FDCE/Q          | None       | SLICE_X52Y91/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[10].dff_/q_reg/Q          | C/fixP_counter/bit[10].dff_/D[0]             - Static -
+| 93       | FDCE/Q          | None       | SLICE_X52Y92/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[11].dff_/q_reg/Q          | C/fixP_counter/bit[11].dff_/D[0]             - Static -
+| 94       | FDCE/Q          | None       | SLICE_X53Y93/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[12].dff_/q_reg/Q          | C/fixP_counter/bit[12].dff_/D[0]             - Static -
+| 95       | FDCE/Q          | None       | SLICE_X53Y97/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[13].dff_/q_reg/Q          | C/fixP_counter/bit[13].dff_/D[0]             - Static -
+| 96       | FDCE/Q          | None       | SLICE_X53Y99/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[14].dff_/q_reg/Q          | C/fixP_counter/bit[14].dff_/D[0]             - Static -
+| 97       | FDCE/Q          | None       | SLICE_X52Y99/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[15].dff_/q_reg/Q          | C/fixP_counter/bit[15].dff_/D[0]             - Static -
+| 98       | FDCE/Q          | None       | SLICE_X52Y100/AFF  | X1Y2         |           1 |               2 |              |       | C/fixP_counter/bit[16].dff_/q_reg/Q          | C/fixP_counter/bit[16].dff_/D[0]             - Static -
+| 99       | FDCE/Q          | None       | SLICE_X53Y100/AFF  | X1Y2         |           1 |               2 |              |       | C/fixP_counter/bit[17].dff_/q_reg/Q          | C/fixP_counter/bit[17].dff_/D[0]             - Static -
+| 100      | FDCE/Q          | None       | SLICE_X45Y86/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/bit[1].dff_/q_reg/Q           | C/fixP_counter/bit[1].dff_/D[0]              - Static -
+| 101      | FDCE/Q          | None       | SLICE_X47Y86/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/bit[2].dff_/q_reg/Q           | C/fixP_counter/bit[2].dff_/D[0]              - Static -
+| 102      | FDCE/Q          | None       | SLICE_X46Y88/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/bit[3].dff_/q_reg/Q           | C/fixP_counter/bit[3].dff_/D[0]              - Static -
+| 103      | FDCE/Q          | None       | SLICE_X48Y88/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/bit[4].dff_/q_reg/Q           | C/fixP_counter/bit[4].dff_/D[0]              - Static -
+| 104      | FDCE/Q          | None       | SLICE_X49Y88/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/bit[5].dff_/q_reg/Q           | C/fixP_counter/bit[5].dff_/D[0]              - Static -
+| 105      | FDCE/Q          | None       | SLICE_X53Y89/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[6].dff_/q_reg/Q           | C/fixP_counter/bit[6].dff_/D[0]              - Static -
+| 106      | FDCE/Q          | None       | SLICE_X53Y90/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[7].dff_/q_reg/Q           | C/fixP_counter/bit[7].dff_/D[0]              - Static -
+| 107      | FDCE/Q          | None       | SLICE_X52Y90/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[8].dff_/q_reg/Q           | C/fixP_counter/bit[8].dff_/D[0]              - Static -
+| 108      | FDCE/Q          | None       | SLICE_X51Y91/AFF   | X1Y1         |           1 |               2 |              |       | C/fixP_counter/bit[9].dff_/q_reg/Q           | C/fixP_counter/bit[9].dff_/D[0]              - Static -
+| 109      | FDCE/Q          | None       | SLICE_X41Y86/AFF   | X0Y1         |           1 |               2 |              |       | C/fixP_counter/dff_00/q_reg/Q                | C/fixP_counter/dff_00/D[0]                   - Static -
+| 110      | FDCE/Q          | None       | SLICE_X35Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[10].dff_/q_reg/Q          | C/fixT_counter/bit[10].dff_/D[0]             - Static -
+| 111      | FDCE/Q          | None       | SLICE_X31Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[11].dff_/q_reg/Q          | C/fixT_counter/bit[11].dff_/D[0]             - Static -
+| 112      | FDCE/Q          | None       | SLICE_X46Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[1].dff_/q_reg/Q           | C/fixT_counter/bit[1].dff_/D[0]              - Static -
+| 113      | FDCE/Q          | None       | SLICE_X45Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[2].dff_/q_reg/Q           | C/fixT_counter/bit[2].dff_/D[0]              - Static -
+| 114      | FDCE/Q          | None       | SLICE_X44Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[3].dff_/q_reg/Q           | C/fixT_counter/bit[3].dff_/D[0]              - Static -
+| 115      | FDCE/Q          | None       | SLICE_X42Y106/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[4].dff_/q_reg/Q           | C/fixT_counter/bit[4].dff_/D[0]              - Static -
+| 116      | FDCE/Q          | None       | SLICE_X42Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[5].dff_/q_reg/Q           | C/fixT_counter/bit[5].dff_/D[0]              - Static -
+| 117      | FDCE/Q          | None       | SLICE_X40Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[6].dff_/q_reg/Q           | C/fixT_counter/bit[6].dff_/D[0]              - Static -
+| 118      | FDCE/Q          | None       | SLICE_X36Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[7].dff_/q_reg/Q           | C/fixT_counter/bit[7].dff_/D[0]              - Static -
+| 119      | FDCE/Q          | None       | SLICE_X33Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[8].dff_/q_reg/Q           | C/fixT_counter/bit[8].dff_/D[0]              - Static -
+| 120      | FDCE/Q          | None       | SLICE_X32Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/bit[9].dff_/q_reg/Q           | C/fixT_counter/bit[9].dff_/D[0]              - Static -
+| 121      | FDCE/Q          | None       | SLICE_X43Y107/AFF  | X0Y2         |           1 |               2 |              |       | C/fixT_counter/dff_00/q_reg/Q                | C/fixT_counter/dff_00/D[0]                   - Static -
+| 122      | FDCE/Q          | None       | SLICE_X40Y44/AFF   | X0Y0         |           1 |               1 |              |       | C/ms_clkdiv/clk_track_reg/Q                  | C/ms_clkdiv/clk_track_reg_0                  - Static -
+| 123      | FDCE/Q          | None       | SLICE_X50Y44/AFF   | X1Y0         |           1 |               3 |              |       | C/ms_timer/counter/bit[1].dff_/q_reg/Q       | C/ms_timer/counter/bit[1].dff_/q_reg_0       - Static -
+| 124      | FDCE/Q          | None       | SLICE_X44Y44/AFF   | X0Y0         |           1 |               3 |              |       | C/ms_timer/counter/bit[2].dff_/q_reg/Q       | C/ms_timer/counter/bit[2].dff_/q_reg_0       - Static -
+| 125      | FDCE/Q          | None       | SLICE_X50Y43/AFF   | X1Y0         |           1 |               3 |              |       | C/ms_timer/counter/bit[3].dff_/q_reg/Q       | C/ms_timer/counter/bit[3].dff_/q_reg_0       - Static -
+| 126      | FDCE/Q          | None       | SLICE_X45Y43/AFF   | X0Y0         |           1 |               2 |              |       | C/ms_timer/counter/bit[4].dff_/q_reg/Q       | C/ms_timer/counter/bit[4].dff_/q_reg_0       - Static -
+| 127      | FDCE/Q          | None       | SLICE_X44Y43/AFF   | X0Y0         |           1 |               2 |              |       | C/ms_timer/counter/bit[5].dff_/q_reg/Q       | C/ms_timer/counter/bit[5].dff_/q_reg_0       - Static -
+| 128      | FDCE/Q          | None       | SLICE_X43Y42/AFF   | X0Y0         |           1 |               2 |              |       | C/ms_timer/counter/bit[6].dff_/q_reg/Q       | C/ms_timer/counter/bit[6].dff_/q_reg_0       - Static -
+| 129      | FDCE/Q          | None       | SLICE_X43Y44/AFF   | X0Y0         |           1 |               3 |              |       | C/ms_timer/counter/dff_00/q_reg/Q            | C/ms_timer/counter/dff_00/q_reg_0            - Static -
+| 130      | FDCE/Q          | None       | SLICE_X44Y46/AFF   | X0Y0         |           1 |               1 |              |       | C/overtime_clkdiv/clk_track_reg/Q            | C/overtime_clkdiv/clk_track_reg_0            - Static -
+| 131      | FDCE/Q          | None       | SLICE_X44Y47/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[1].dff_/q_reg/Q | C/overtime_timer/counter/bit[1].dff_/q_reg_0 - Static -
+| 132      | FDCE/Q          | None       | SLICE_X44Y48/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[2].dff_/q_reg/Q | C/overtime_timer/counter/bit[2].dff_/q_reg_0 - Static -
+| 133      | FDCE/Q          | None       | SLICE_X45Y48/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[3].dff_/q_reg/Q | C/overtime_timer/counter/bit[3].dff_/q_reg_0 - Static -
+| 134      | FDCE/Q          | None       | SLICE_X45Y47/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[4].dff_/q_reg/Q | C/overtime_timer/counter/bit[4].dff_/q_reg_0 - Static -
+| 135      | FDCE/Q          | None       | SLICE_X46Y47/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[5].dff_/q_reg/Q | C/overtime_timer/counter/bit[5].dff_/q_reg_0 - Static -
+| 136      | FDCE/Q          | None       | SLICE_X45Y46/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/bit[6].dff_/q_reg/Q | C/overtime_timer/counter/bit[6].dff_/q_reg_0 - Static -
+| 137      | FDCE/Q          | None       | SLICE_X44Y45/AFF   | X0Y0         |           1 |               2 |              |       | C/overtime_timer/counter/dff_00/q_reg/Q      | C/overtime_timer/counter/dff_00/q_reg_0      - Static -
+| 138      | FDCE/Q          | None       | SLICE_X52Y95/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[10].dff_/q_reg/Q          | D/fixP_counter/bit[10].dff_/D[0]             - Static -
+| 139      | FDCE/Q          | None       | SLICE_X53Y95/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[11].dff_/q_reg/Q          | D/fixP_counter/bit[11].dff_/D[0]             - Static -
+| 140      | FDCE/Q          | None       | SLICE_X53Y96/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[12].dff_/q_reg/Q          | D/fixP_counter/bit[12].dff_/D[0]             - Static -
+| 141      | FDCE/Q          | None       | SLICE_X54Y96/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[13].dff_/q_reg/Q          | D/fixP_counter/bit[13].dff_/D[0]             - Static -
+| 142      | FDCE/Q          | None       | SLICE_X52Y97/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[14].dff_/q_reg/Q          | D/fixP_counter/bit[14].dff_/D[0]             - Static -
+| 143      | FDCE/Q          | None       | SLICE_X52Y103/AFF  | X1Y2         |           1 |               2 |              |       | D/fixP_counter/bit[15].dff_/q_reg/Q          | D/fixP_counter/bit[15].dff_/D[0]             - Static -
+| 144      | FDCE/Q          | None       | SLICE_X48Y103/AFF  | X0Y2         |           1 |               2 |              |       | D/fixP_counter/bit[16].dff_/q_reg/Q          | D/fixP_counter/bit[16].dff_/D[0]             - Static -
+| 145      | FDCE/Q          | None       | SLICE_X49Y103/AFF  | X0Y2         |           1 |               2 |              |       | D/fixP_counter/bit[17].dff_/q_reg/Q          | D/fixP_counter/bit[17].dff_/D[0]             - Static -
+| 146      | FDCE/Q          | None       | SLICE_X37Y87/AFF   | X0Y1         |           1 |               2 |              |       | D/fixP_counter/bit[1].dff_/q_reg/Q           | D/fixP_counter/bit[1].dff_/D[0]              - Static -
+| 147      | FDCE/Q          | None       | SLICE_X42Y87/AFF   | X0Y1         |           1 |               2 |              |       | D/fixP_counter/bit[2].dff_/q_reg/Q           | D/fixP_counter/bit[2].dff_/D[0]              - Static -
+| 148      | FDCE/Q          | None       | SLICE_X44Y86/AFF   | X0Y1         |           1 |               2 |              |       | D/fixP_counter/bit[3].dff_/q_reg/Q           | D/fixP_counter/bit[3].dff_/D[0]              - Static -
+| 149      | FDCE/Q          | None       | SLICE_X52Y88/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[4].dff_/q_reg/Q           | D/fixP_counter/bit[4].dff_/D[0]              - Static -
+| 150      | FDCE/Q          | None       | SLICE_X53Y91/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[5].dff_/q_reg/Q           | D/fixP_counter/bit[5].dff_/D[0]              - Static -
+| 151      | FDCE/Q          | None       | SLICE_X53Y92/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[6].dff_/q_reg/Q           | D/fixP_counter/bit[6].dff_/D[0]              - Static -
+| 152      | FDCE/Q          | None       | SLICE_X52Y93/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[7].dff_/q_reg/Q           | D/fixP_counter/bit[7].dff_/D[0]              - Static -
+| 153      | FDCE/Q          | None       | SLICE_X52Y94/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[8].dff_/q_reg/Q           | D/fixP_counter/bit[8].dff_/D[0]              - Static -
+| 154      | FDCE/Q          | None       | SLICE_X53Y94/AFF   | X1Y1         |           1 |               2 |              |       | D/fixP_counter/bit[9].dff_/q_reg/Q           | D/fixP_counter/bit[9].dff_/D[0]              - Static -
+| 155      | FDCE/Q          | None       | SLICE_X39Y87/AFF   | X0Y1         |           1 |               2 |              |       | D/fixP_counter/dff_00/q_reg/Q                | D/fixP_counter/dff_00/D[0]                   - Static -
+| 156      | FDCE/Q          | None       | SLICE_X30Y107/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[10].dff_/q_reg/Q          | D/fixT_counter/bit[10].dff_/D[0]             - Static -
+| 157      | FDCE/Q          | None       | SLICE_X29Y106/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[11].dff_/q_reg/Q          | D/fixT_counter/bit[11].dff_/D[0]             - Static -
+| 158      | FDCE/Q          | None       | SLICE_X46Y108/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[1].dff_/q_reg/Q           | D/fixT_counter/bit[1].dff_/D[0]              - Static -
+| 159      | FDCE/Q          | None       | SLICE_X45Y108/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[2].dff_/q_reg/Q           | D/fixT_counter/bit[2].dff_/D[0]              - Static -
+| 160      | FDCE/Q          | None       | SLICE_X45Y105/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[3].dff_/q_reg/Q           | D/fixT_counter/bit[3].dff_/D[0]              - Static -
+| 161      | FDCE/Q          | None       | SLICE_X42Y105/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[4].dff_/q_reg/Q           | D/fixT_counter/bit[4].dff_/D[0]              - Static -
+| 162      | FDCE/Q          | None       | SLICE_X39Y105/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[5].dff_/q_reg/Q           | D/fixT_counter/bit[5].dff_/D[0]              - Static -
+| 163      | FDCE/Q          | None       | SLICE_X40Y105/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[6].dff_/q_reg/Q           | D/fixT_counter/bit[6].dff_/D[0]              - Static -
+| 164      | FDCE/Q          | None       | SLICE_X30Y105/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[7].dff_/q_reg/Q           | D/fixT_counter/bit[7].dff_/D[0]              - Static -
+| 165      | FDCE/Q          | None       | SLICE_X26Y106/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[8].dff_/q_reg/Q           | D/fixT_counter/bit[8].dff_/D[0]              - Static -
+| 166      | FDCE/Q          | None       | SLICE_X32Y108/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/bit[9].dff_/q_reg/Q           | D/fixT_counter/bit[9].dff_/D[0]              - Static -
+| 167      | FDCE/Q          | None       | SLICE_X48Y107/AFF  | X0Y2         |           1 |               2 |              |       | D/fixT_counter/dff_00/q_reg/Q                | D/fixT_counter/dff_00/D[0]                   - Static -
+| 168      | FDCE/Q          | None       | SLICE_X45Y42/AFF   | X0Y0         |           1 |               1 |              |       | D/ms_clkdiv/clk_track_reg/Q                  | D/ms_clkdiv/clk_track_reg_0                  - Static -
+| 169      | FDCE/Q          | None       | SLICE_X49Y42/AFF   | X0Y0         |           1 |               3 |              |       | D/ms_timer/counter/bit[1].dff_/q_reg/Q       | D/ms_timer/counter/bit[1].dff_/q_reg_0       - Static -
+| 170      | FDCE/Q          | None       | SLICE_X49Y48/AFF   | X0Y0         |           1 |               3 |              |       | D/ms_timer/counter/bit[2].dff_/q_reg/Q       | D/ms_timer/counter/bit[2].dff_/q_reg_0       - Static -
+| 171      | FDCE/Q          | None       | SLICE_X49Y47/AFF   | X0Y0         |           1 |               3 |              |       | D/ms_timer/counter/bit[3].dff_/q_reg/Q       | D/ms_timer/counter/bit[3].dff_/q_reg_0       - Static -
+| 172      | FDCE/Q          | None       | SLICE_X48Y41/AFF   | X0Y0         |           1 |               2 |              |       | D/ms_timer/counter/bit[4].dff_/q_reg/Q       | D/ms_timer/counter/bit[4].dff_/q_reg_0       - Static -
+| 173      | FDCE/Q          | None       | SLICE_X48Y40/AFF   | X0Y0         |           1 |               2 |              |       | D/ms_timer/counter/bit[5].dff_/q_reg/Q       | D/ms_timer/counter/bit[5].dff_/q_reg_0       - Static -
+| 174      | FDCE/Q          | None       | SLICE_X49Y40/AFF   | X0Y0         |           1 |               2 |              |       | D/ms_timer/counter/bit[6].dff_/q_reg/Q       | D/ms_timer/counter/bit[6].dff_/q_reg_0       - Static -
+| 175      | FDCE/Q          | None       | SLICE_X48Y42/AFF   | X0Y0         |           1 |               3 |              |       | D/ms_timer/counter/dff_00/q_reg/Q            | D/ms_timer/counter/dff_00/q_reg_0            - Static -
+| 176      | FDCE/Q          | None       | SLICE_X48Y47/AFF   | X0Y0         |           1 |               1 |              |       | D/overtime_clkdiv/clk_track_reg/Q            | D/overtime_clkdiv/clk_track_reg_0            - Static -
+| 177      | FDCE/Q          | None       | SLICE_X50Y47/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[1].dff_/q_reg/Q | D/overtime_timer/counter/bit[1].dff_/q_reg_0 - Static -
+| 178      | FDCE/Q          | None       | SLICE_X50Y46/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[2].dff_/q_reg/Q | D/overtime_timer/counter/bit[2].dff_/q_reg_0 - Static -
+| 179      | FDCE/Q          | None       | SLICE_X50Y45/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[3].dff_/q_reg/Q | D/overtime_timer/counter/bit[3].dff_/q_reg_0 - Static -
+| 180      | FDCE/Q          | None       | SLICE_X51Y45/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[4].dff_/q_reg/Q | D/overtime_timer/counter/bit[4].dff_/q_reg_0 - Static -
+| 181      | FDCE/Q          | None       | SLICE_X51Y46/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[5].dff_/q_reg/Q | D/overtime_timer/counter/bit[5].dff_/q_reg_0 - Static -
+| 182      | FDCE/Q          | None       | SLICE_X47Y46/AFF   | X0Y0         |           1 |               2 |              |       | D/overtime_timer/counter/bit[6].dff_/q_reg/Q | D/overtime_timer/counter/bit[6].dff_/q_reg_0 - Static -
+| 183      | FDCE/Q          | None       | SLICE_X51Y47/AFF   | X1Y0         |           1 |               2 |              |       | D/overtime_timer/counter/dff_00/q_reg/Q      | D/overtime_timer/counter/dff_00/q_reg_0      - Static -
+| 184      | IBUF/O          | IOB_X0Y34  | IOB_X0Y34/INBUF_EN | X0Y0         |           1 |               2 |              |       | zynq_emio_tri_iobuf_11/IBUF/O                | zynq_emio_tri_iobuf_11/O                     - Static -
+| 185      | IBUF/O          | IOB_X0Y33  | IOB_X0Y33/INBUF_EN | X0Y0         |           1 |               2 |              |       | zynq_emio_tri_iobuf_14/IBUF/O                | zynq_emio_tri_iobuf_14/O                     - Static -
+| 186      | IBUF/O          | IOB_X0Y12  | IOB_X0Y12/INBUF_EN | X0Y0         |           1 |               2 |              |       | zynq_emio_tri_iobuf_17/IBUF/O                | zynq_emio_tri_iobuf_17/O                     - Static -
+| 187      | IBUF/O          | IOB_X0Y11  | IOB_X0Y11/INBUF_EN | X0Y0         |           1 |               2 |              |       | zynq_emio_tri_iobuf_20/IBUF/O                | zynq_emio_tri_iobuf_20/O                     - Static -
++----------+-----------------+------------+--------------------+--------------+-------------+-----------------+--------------+-------+----------------------------------------------+----------------------------------------------||
+* Local Clocks in this context represents only clocks driven by non-global buffers
+** Clock Loads column represents the clock pin loads (pin count)
+*** Non-Clock Loads column represents the non-clock pin loads (pin count)
+
+
+5. Clock Regions: Key Resource Utilization
+------------------------------------------
+
++-------------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
+|                   | Global Clock |     BUFRs    |    BUFMRs    |    BUFIOs    |     MMCM     |      PLL     |      GT      |      PCI     |    ILOGIC    |    OLOGIC    |      FF      |     LUTM     |    RAMB18    |    RAMB36    |    DSP48E2   |
++-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
+| Clock Region Name | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail |
++-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
+| X0Y0              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  105 |  2500 |   54 |  1000 |    0 |    60 |    0 |    30 |    0 |    60 |
+| X1Y0              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |   60 |  3200 |   25 |   850 |    0 |    60 |    0 |    30 |    0 |    40 |
+| X0Y1              |    6 |    12 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 | 1306 |  1200 |  427 |   400 |    0 |    20 |    0 |    10 |    0 |    20 |
+| X1Y1              |    5 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  120 |  2600 |   50 |   850 |    0 |    60 |    0 |    30 |    0 |    40 |
+| X0Y2              |    5 |    12 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |  629 |  1200 |  237 |   400 |    0 |    20 |    0 |    10 |    0 |    20 |
+| X1Y2              |    5 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |   23 |  2600 |   16 |   850 |    0 |    60 |    0 |    30 |    0 |    40 |
++-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
+* Global Clock column represents track count; while other columns represents cell counts
+
+
+6. Clock Regions : Global Clock Summary
+---------------------------------------
+
+All Modules
++----+----+----+
+|    | X0 | X1 |
++----+----+----+
+| Y2 |  5 |  5 |
+| Y1 |  6 |  5 |
+| Y0 |  4 |  4 |
++----+----+----+
+
+
+7. Device Cell Placement Summary for Global Clock g0
+----------------------------------------------------
+
++-----------+-----------------+-------------------+------------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock      | Period (ns) | Waveform (ns)  | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net                                       |
++-----------+-----------------+-------------------+------------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
+| g0        | BUFG/O          | n/a               | clk_fpga_0 |      20.000 | {0.000 10.000} |        1838 |        0 |              0 |        0 | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
++-----------+-----------------+-------------------+------------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-------+-----+
+|    | X0    | X1  |
++----+-------+-----+
+| Y2 |   538 |   5 |
+| Y1 |  1246 |  49 |
+| Y0 |     0 |   0 |
++----+-------+-----+
+
+
+8. Device Cell Placement Summary for Global Clock g1
+----------------------------------------------------
+
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------------------+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net               |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------------------+
+| g1        | BUFG/O          | n/a               |       |             |               |         152 |        0 |              0 |        0 | sys_clk_IBUF_BUFG |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------------------+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-----+-----+
+|    | X0  | X1  |
++----+-----+-----+
+| Y2 |   0 |   0 |
+| Y1 |  41 |   0 |
+| Y0 |  77 |  34 |
++----+-----+-----+
+
+
+9. Device Cell Placement Summary for Global Clock g2
+----------------------------------------------------
+
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-----+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-----+
+| g2        | BUFG/O          | n/a               |       |             |               |          93 |        0 |              0 |        0 | rst |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-----+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-----+-----+
+|    | X0  | X1  |
++----+-----+-----+
+| Y2 |  26 |   2 |
+| Y1 |  39 |  17 |
+| Y0 |   7 |   2 |
++----+-----+-----+
+
+
+10. Device Cell Placement Summary for Global Clock g3
+-----------------------------------------------------
+
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net   |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| g3        | BUFG/O          | n/a               |       |             |               |          93 |        0 |              0 |        0 | rst_0 |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-----+-----+
+|    | X0  | X1  |
++----+-----+-----+
+| Y2 |  25 |  10 |
+| Y1 |  22 |  11 |
+| Y0 |   0 |  25 |
++----+-----+-----+
+
+
+11. Device Cell Placement Summary for Global Clock g4
+-----------------------------------------------------
+
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net   |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| g4        | BUFG/O          | n/a               |       |             |               |          93 |        0 |              0 |        0 | rst_1 |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-----+-----+
+|    | X0  | X1  |
++----+-----+-----+
+| Y2 |  26 |   5 |
+| Y1 |  16 |  21 |
+| Y0 |  23 |   2 |
++----+-----+-----+
+
+
+12. Device Cell Placement Summary for Global Clock g5
+-----------------------------------------------------
+
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| Global Id | Driver Type/Pin | Driver Region (D) | Clock | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net   |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+| g5        | BUFG/O          | n/a               |       |             |               |          93 |        0 |              0 |        0 | rst_2 |
++-----------+-----------------+-------------------+-------+-------------+---------------+-------------+----------+----------------+----------+-------+
+* Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
+** IO Loads column represents load cell count of IO types
+*** Clocking Loads column represents load cell count that are clock resources (global clock buffer, MMCM, PLL, etc)
+**** GT Loads column represents load cell count of GT types
+
+
++----+-----+-----+
+|    | X0  | X1  |
++----+-----+-----+
+| Y2 |  33 |   1 |
+| Y1 |  12 |  22 |
+| Y0 |  25 |   0 |
++----+-----+-----+
+
+
+13. Clock Region Cell Placement per Global Clock: Region X0Y0
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net               |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+| g1        | n/a   | BUFG/O          | None       |          77 |               0 | 77 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_clk_IBUF_BUFG |
+| g2        | n/a   | BUFG/O          | None       |           0 |               7 |  7 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst               |
+| g4        | n/a   | BUFG/O          | None       |           0 |              23 | 23 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1             |
+| g5        | n/a   | BUFG/O          | None       |           0 |              25 | 25 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_2             |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+14. Clock Region Cell Placement per Global Clock: Region X1Y0
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net               |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+| g1        | n/a   | BUFG/O          | None       |          34 |               0 | 34 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_clk_IBUF_BUFG |
+| g2        | n/a   | BUFG/O          | None       |           0 |               2 |  2 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst               |
+| g3        | n/a   | BUFG/O          | None       |           0 |              25 | 25 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_0             |
+| g4        | n/a   | BUFG/O          | None       |           0 |               2 |  2 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1             |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+15. Clock Region Cell Placement per Global Clock: Region X0Y1
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                       |
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |        1246 |               0 | 1198 |     48 |    0 |   0 |  0 |    0 |   0 |       0 | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
+| g1        | n/a   | BUFG/O          | None       |          41 |               0 |   41 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_clk_IBUF_BUFG                         |
+| g2        | n/a   | BUFG/O          | None       |          10 |              29 |   39 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst                                       |
+| g3        | n/a   | BUFG/O          | None       |           9 |              13 |   22 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_0                                     |
+| g4        | n/a   | BUFG/O          | None       |           6 |              10 |   16 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1                                     |
+| g5        | n/a   | BUFG/O          | None       |           4 |               8 |   12 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_2                                     |
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+16. Clock Region Cell Placement per Global Clock: Region X1Y1
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                       |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |          49 |               0 | 49 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
+| g2        | n/a   | BUFG/O          | None       |           9 |               8 | 17 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst                                       |
+| g3        | n/a   | BUFG/O          | None       |           6 |               5 | 11 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_0                                     |
+| g4        | n/a   | BUFG/O          | None       |          11 |              10 | 21 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1                                     |
+| g5        | n/a   | BUFG/O          | None       |          11 |              11 | 22 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_2                                     |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+17. Clock Region Cell Placement per Global Clock: Region X0Y2
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                       |
++-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |         538 |               0 | 519 |     18 |    0 |   0 |  0 |    0 |   0 |       0 | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
+| g2        | n/a   | BUFG/O          | None       |          13 |              13 |  26 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst                                       |
+| g3        | n/a   | BUFG/O          | None       |          13 |              12 |  25 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_0                                     |
+| g4        | n/a   | BUFG/O          | None       |          13 |              13 |  26 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1                                     |
+| g5        | n/a   | BUFG/O          | None       |          17 |              16 |  33 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_2                                     |
++-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+18. Clock Region Cell Placement per Global Clock: Region X1Y2
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                       |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |           5 |               0 |  5 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | cpu_i/processing_system7_0/inst/FCLK_CLK0 |
+| g2        | n/a   | BUFG/O          | None       |           0 |               2 |  2 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst                                       |
+| g3        | n/a   | BUFG/O          | None       |           4 |               6 | 10 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_0                                     |
+| g4        | n/a   | BUFG/O          | None       |           2 |               3 |  5 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_1                                     |
+| g5        | n/a   | BUFG/O          | None       |           0 |               1 |  1 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | rst_2                                     |
++-----------+-------+-----------------+------------+-------------+-----------------+----+--------+------+-----+----+------+-----+---------+-------------------------------------------+
+* Clock Loads column represents the clock pin loads (pin count)
+** Non-Clock Loads column represents the non-clock pin loads (pin count)
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+
+# Location of BUFG Primitives 
+set_property LOC BUFGCTRL_X0Y0 [get_cells sys_clk_IBUF_BUFG_inst]
+set_property LOC BUFGCTRL_X0Y4 [get_cells q2_reg_i_2__2]
+set_property LOC BUFGCTRL_X0Y3 [get_cells q2_reg_i_2__1]
+set_property LOC BUFGCTRL_X0Y2 [get_cells q2_reg_i_2__0]
+set_property LOC BUFGCTRL_X0Y1 [get_cells q2_reg_i_2]
+set_property LOC BUFGCTRL_X0Y16 [get_cells cpu_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG]
+
+# Location of IO Primitives which is load of clock spine
+
+# Location of clock ports
+set_property LOC IOB_X0Y26 [get_ports sys_clk]
+
+# Clock net "sys_clk_IBUF_BUFG" driven by instance "sys_clk_IBUF_BUFG_inst" located at site "BUFGCTRL_X0Y0"
+#startgroup
+create_pblock {CLKAG_sys_clk_IBUF_BUFG}
+add_cells_to_pblock [get_pblocks  {CLKAG_sys_clk_IBUF_BUFG}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="sys_clk_IBUF_BUFG"}]]]
+resize_pblock [get_pblocks {CLKAG_sys_clk_IBUF_BUFG}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0}
+#endgroup
+
+# Clock net "rst_2" driven by instance "q2_reg_i_2__2" located at site "BUFGCTRL_X0Y4"
+#startgroup
+create_pblock {CLKAG_rst_2}
+add_cells_to_pblock [get_pblocks  {CLKAG_rst_2}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="rst_2"}]]]
+resize_pblock [get_pblocks {CLKAG_rst_2}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+#endgroup
+
+# Clock net "rst_1" driven by instance "q2_reg_i_2__1" located at site "BUFGCTRL_X0Y3"
+#startgroup
+create_pblock {CLKAG_rst_1}
+add_cells_to_pblock [get_pblocks  {CLKAG_rst_1}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="rst_1"}]]]
+resize_pblock [get_pblocks {CLKAG_rst_1}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+#endgroup
+
+# Clock net "rst_0" driven by instance "q2_reg_i_2__0" located at site "BUFGCTRL_X0Y2"
+#startgroup
+create_pblock {CLKAG_rst_0}
+add_cells_to_pblock [get_pblocks  {CLKAG_rst_0}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="rst_0"}]]]
+resize_pblock [get_pblocks {CLKAG_rst_0}] -add {CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+#endgroup
+
+# Clock net "rst" driven by instance "q2_reg_i_2" located at site "BUFGCTRL_X0Y1"
+#startgroup
+create_pblock {CLKAG_rst}
+add_cells_to_pblock [get_pblocks  {CLKAG_rst}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="rst"}]]]
+resize_pblock [get_pblocks {CLKAG_rst}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+#endgroup
+
+# Clock net "cpu_i/processing_system7_0/inst/FCLK_CLK0" driven by instance "cpu_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG" located at site "BUFGCTRL_X0Y16"
+#startgroup
+create_pblock {CLKAG_cpu_i/processing_system7_0/inst/FCLK_CLK0}
+add_cells_to_pblock [get_pblocks  {CLKAG_cpu_i/processing_system7_0/inst/FCLK_CLK0}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="cpu_i/processing_system7_0/inst/FCLK_CLK0"}]]]
+resize_pblock [get_pblocks {CLKAG_cpu_i/processing_system7_0/inst/FCLK_CLK0}] -add {CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+#endgroup

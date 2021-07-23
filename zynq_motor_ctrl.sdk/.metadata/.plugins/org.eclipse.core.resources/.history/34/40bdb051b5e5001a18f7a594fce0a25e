@@ -1,0 +1,200 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xil_types.h"
+
+#include "sleep.h"
+#include "xtime_l.h"
+
+#include "motor_dac_ctrl.h"
+#include "zynq_can.h"
+
+#include "motion.h"
+#include "canopen.h"
+
+
+_Float64 duration = 60000.0;
+
+int Init() {
+	init_platform();
+	print("System Boot.\n\r");
+
+	CANOpenInit();
+	MotionInit();
+
+
+// Ready Msg
+    /*while (count < 10) {
+    	START[7] = count;
+    	Status = SendFrame(&Can, count, START, (u8) sizeof(START));
+    	if (Status != XST_SUCCESS) {
+    		print("Send failed.\n\r");
+    		return XST_FAILURE;
+    	}
+    	count++;
+    	usleep(1000);
+    }*/
+    return XST_SUCCESS;
+}
+
+void End() {
+	//u8 EXIT[] = {'5', '5', '5', '5', '5', '5', '5', '5'};
+
+	MotorOFF();
+
+	//SendFrame(&Can, 0x66, EXIT, (u8) sizeof(EXIT));
+
+    cleanup_platform();
+}
+
+XTime t_now, t_ctrl, t_speedout, t_cmd, t_Ta, t_Tca, t_CANout, t_est_a, t_est_ca;
+XTime t_p[4];
+
+void GeneralCmd(u8 opt) {
+	switch (opt) {
+	case 0xEF:
+		duration = 0;
+		break;
+	case 0xDD:
+		s[0] = s[1] = s[2] = s[3] = 0.0;
+		odom[0] = odom[1] = odom[2] = 0.0;
+		break;
+	case 0xDF:
+		u[0] = u[1] = u[2] = u[3] = 0.0;
+		break;
+	}
+}
+
+u8 BootUp(u8 ret) {
+	if (ret) {
+		SoftStop();
+		return 0;
+	}
+
+	printf("BootUp\n");
+	return 1;
+}
+
+
+u8 Reset(u8 ret) {
+if (ret) {
+		SoftStop();
+		return 0;
+	}
+	printf("Reset\n");
+	return 1;
+}
+
+u8 Stopped(u8 ret) {
+	if (ret) {
+		SoftStop();
+		return 0;
+	}
+
+	printf("Stopped\n");
+	return 1;
+}
+
+u8 PreOp(u8 ret) {
+	if (ret) {
+		SoftStop();
+		BootupMsg();
+		return 0;
+	}
+
+	XTime_GetTime(&t_now);
+	XTime_GetTime(&t_speedout);
+	XTime_GetTime(&t_cmd);
+	XTime_GetTime(&t_est_a);
+	XTime_GetTime(&t_est_ca);
+	XTime_GetTime(&t_ctrl);
+	XTime_GetTime(&t_CANout);
+
+	return 1;
+}
+
+u8 Op(u8 ret) {
+	float ctrl_t = 1./100., fb_hz = 500., cmd_hz = 60., can_hz = 20., est_a_hz = 20., est_ca_hz = 20.;
+	u8 dac_addr[] = {DAC_IIC_ADDR_A, DAC_IIC_ADDR_B, DAC_IIC_ADDR_C, DAC_IIC_ADDR_D};
+
+
+	XTime_GetTime(&t_now);
+	if (1./fb_hz <= ( 1.0 * (t_now - t_speedout) / (COUNTS_PER_SECOND) )) {
+		SpeedOut((_Float64)(1.0 * (t_now - t_speedout) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_speedout);
+	}
+
+	/*XTime_GetTime(&t_now);
+	if (1./can_hz <= ( 1.0 * (t_now - t_CANout) / (COUNTS_PER_SECOND) )) {
+		CANout((_Float64)(1.0 * (t_now - t_Ta) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_CANout);
+	}*/
+
+	XTime_GetTime(&t_now);
+	if (1./est_a_hz <= ( 1.0 * (t_now - t_est_a) / (COUNTS_PER_SECOND) )) {
+		XTime_GetTime(&t_Ta);
+		Differentiator(a_y, y_0, a, (_Float64)(1.0 * (t_now - t_est_a) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_est_a);
+	}
+
+	XTime_GetTime(&t_now);
+	if (1./est_ca_hz <= ( 1.0 * (t_now - t_est_ca) / (COUNTS_PER_SECOND) )) {
+		XTime_GetTime(&t_Tca);
+		Differentiator(a_v, v, cmd_a, (_Float64)(1.0 * (t_now - t_est_ca) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_est_ca);
+	}
+
+	XTime_GetTime(&t_now);
+	if (1./cmd_hz <= ( 1.0 * (t_now - t_cmd) / (COUNTS_PER_SECOND) )) {
+		Setpoint(vel_frame, (_Float64)(1.0 * (t_now - t_cmd) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_cmd);
+	}
+
+	XTime_GetTime(&t_now);
+	if (ctrl_t <= ( 1.0 * (t_now - t_ctrl) / (COUNTS_PER_SECOND) )) {
+		Integrator((_Float64)(1.0 * (t_now - t_ctrl) / (COUNTS_PER_SECOND)));
+		Ctrl((_Float64)(1.0 * (t_now - t_ctrl) / (COUNTS_PER_SECOND)),
+							(_Float64)(1.0 * (t_now - t_Ta) / (COUNTS_PER_SECOND)),
+							(_Float64)(1.0 * (t_now - t_cmd) / (COUNTS_PER_SECOND)));
+		XTime_GetTime(&t_ctrl);
+	}
+
+	for (int i=0;i<4;i++) {
+		XTime_GetTime(&t_now);
+		if (p_t[i] <= ( 1.0 * (t_now - t_p[i]) / (COUNTS_PER_SECOND) )) {
+			Plant(i, dac_addr[i]);
+			XTime_GetTime(&t_p[i]);
+		}
+	}
+	return 1;
+}
+
+static inline int H(unsigned char B0) {
+	return ( (B0>>7)|((B0&0xF)<<1) ); //Magic
+}
+
+int main(void) {
+ 	XTime t_start;
+ 	double  elapsed_time = 0.0;
+ 	u8 ret = 0;
+ 	u8 (*state_machine[])(u8) = {0, PreOp, Op, Reset, Stopped, BootUp};
+
+	Init();
+
+	XTime_GetTime(&t_start);
+	while (elapsed_time < duration) {
+		CANopenOut();
+		CANopenIn();
+
+		//Change state
+		ret = state_machine[H(0x80)](ret);
+		//General Command
+		GeneralCmd();
+
+		XTime_GetTime(&t_now);
+		elapsed_time = 1.0 * (t_now - t_start) / (COUNTS_PER_SECOND);
+	}
+
+	End();
+	return 1;
+}

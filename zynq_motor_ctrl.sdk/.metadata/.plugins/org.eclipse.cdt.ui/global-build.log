@@ -1,0 +1,140 @@
+09:24:27 **** Clean-only build of configuration Debug for project CAN_direct ****
+make clean 
+rm -rf  ./src/main.o ./src/motion.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o  ./src/main.d ./src/motion.d ./src/motor_axi_gpio.d ./src/motor_dac_ctrl.d ./src/motor_driver_pins.d ./src/platform.d ./src/zynq_can.d  CAN_direct.elf.size  CAN_direct.elf
+ 
+09:24:27 **** Clean-only build of project motor_ctrl_bsp ****
+make -k clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/qspips_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/iicps_v3_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/canps_v3_2/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpio_v4_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+09:24:57 **** Clean-only build of configuration Debug for project CANOpen ****
+make clean 
+rm -rf  ./src/config.o ./src/main.o ./src/motor_dac.o ./src/motor_gpio.o ./src/motor_motion.o ./src/motor_rtl.o ./src/platform.o ./src/zynq_can.o  ./src/config.d ./src/main.d ./src/motor_dac.d ./src/motor_gpio.d ./src/motor_motion.d ./src/motor_rtl.d ./src/platform.d ./src/zynq_can.d  CANOpen.elf.size  CANOpen.elf
+ 
+09:24:58 **** Clean-only build of configuration Debug for project CAN_direct ****
+make clean 
+rm -rf  ./src/main.o ./src/motion.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o  ./src/main.d ./src/motion.d ./src/motor_axi_gpio.d ./src/motor_dac_ctrl.d ./src/motor_driver_pins.d ./src/platform.d ./src/zynq_can.d  CAN_direct.elf.size  CAN_direct.elf
+ 
+09:24:58 **** Clean-only build of configuration Debug for project boot_test ****
+make clean 
+rm -rf  ./src/canopen.o ./src/main.o ./src/motion.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o  ./src/canopen.d ./src/main.d ./src/motion.d ./src/motor_axi_gpio.d ./src/motor_dac_ctrl.d ./src/motor_driver_pins.d ./src/platform.d ./src/zynq_can.d  boot_test.elf.size  boot_test.elf
+ 
+09:24:59 **** Clean-only build of configuration Debug for project bootloader ****
+make clean 
+rm -rf  ./src/fsbl_handoff.o ./src/fsbl_hooks.o ./src/image_mover.o ./src/main.o ./src/md5.o ./src/nand.o ./src/nor.o ./src/pcap.o ./src/ps7_init.o ./src/qspi.o ./src/rsa.o ./src/sd.o  ./src/fsbl_handoff.d  ./src/fsbl_hooks.d ./src/image_mover.d ./src/main.d ./src/md5.d ./src/nand.d ./src/nor.d ./src/pcap.d ./src/ps7_init.d ./src/qspi.d ./src/rsa.d ./src/sd.d  bootloader.elf.size  bootloader.elf
+ 
+09:24:59 **** Clean-only build of project motor_ctrl_bsp ****
+09:24:59 **** Clean-only build of project bootloader_bsp ****
+make -k clean 
+make -k clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/qspips_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xilrsa_v1_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xilffs_v4_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/iicps_v3_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/canps_v3_2/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/qspips_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/iicps_v3_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/canps_v3_2/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpio_v4_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpio_v4_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+09:25:19 **** Clean-only build of configuration Debug for project boot_test ****
+make clean 
+rm -rf  ./src/canopen.o ./src/main.o ./src/motion.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o  ./src/canopen.d ./src/main.d ./src/motion.d ./src/motor_axi_gpio.d ./src/motor_dac_ctrl.d ./src/motor_driver_pins.d ./src/platform.d ./src/zynq_can.d  boot_test.elf.size  boot_test.elf
+ 
+09:25:20 **** Clean-only build of configuration Debug for project bootloader ****
+make clean 
+rm -rf  ./src/fsbl_handoff.o ./src/fsbl_hooks.o ./src/image_mover.o ./src/main.o ./src/md5.o ./src/nand.o ./src/nor.o ./src/pcap.o ./src/ps7_init.o ./src/qspi.o ./src/rsa.o ./src/sd.o  ./src/fsbl_handoff.d  ./src/fsbl_hooks.d ./src/image_mover.d ./src/main.d ./src/md5.d ./src/nand.d ./src/nor.d ./src/pcap.d ./src/ps7_init.d ./src/qspi.d ./src/rsa.d ./src/sd.d  bootloader.elf.size  bootloader.elf
+ 
+09:25:20 **** Clean-only build of configuration Debug for project CAN_direct ****
+make clean 
+rm -rf  ./src/main.o ./src/motion.o ./src/motor_axi_gpio.o ./src/motor_dac_ctrl.o ./src/motor_driver_pins.o ./src/platform.o ./src/zynq_can.o  ./src/main.d ./src/motion.d ./src/motor_axi_gpio.d ./src/motor_dac_ctrl.d ./src/motor_driver_pins.d ./src/platform.d ./src/zynq_can.d  CAN_direct.elf.size  CAN_direct.elf
+ 
+09:25:20 **** Clean-only build of configuration Debug for project CANOpen ****
+make clean 
+rm -rf  ./src/config.o ./src/main.o ./src/motor_dac.o ./src/motor_gpio.o ./src/motor_motion.o ./src/motor_rtl.o ./src/platform.o ./src/zynq_can.o  ./src/config.d ./src/main.d ./src/motor_dac.d ./src/motor_gpio.d ./src/motor_motion.d ./src/motor_rtl.d ./src/platform.d ./src/zynq_can.d  CANOpen.elf.size  CANOpen.elf
+ 
+09:25:21 **** Clean-only build of project motor_ctrl_bsp ****
+09:25:21 **** Clean-only build of project bootloader_bsp ****
+make -k clean 
+make -k clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/qspips_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/iicps_v3_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/canps_v3_2/src -s clean 
+make -C ps7_cortexa9_0/libsrc/qspips_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xilrsa_v1_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xilffs_v4_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/iicps_v3_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpio_v4_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/canps_v3_2/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+make -C ps7_cortexa9_0/libsrc/gpio_v4_3/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a

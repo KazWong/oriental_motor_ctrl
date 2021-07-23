@@ -1,0 +1,110 @@
+/*
+ * canopen.c
+ *
+ *  Created on: 18 Aug 2020
+ *      Author: whwong
+ */
+#include "zynq_can.h"
+
+#include "canopen.h"
+
+XCanPs Can;
+PDOMsg PDOMsg_buffer[1024];
+int PDOMsg_buf_start_idx = 0;
+int PDOMsg_buf_end_idx = 0;
+
+void CANOpenInit() {
+	for (int i=0;i<1024;i++) {
+		PDOMsg_buffer[i] = 0x00;
+	}
+	PDOMsg_buf_start_idx = 0;
+	PDOMsg_buf_end_idx = 0;
+}
+
+void BootupMsg() {
+	s32 Status;
+	u8 bootup[] = {0x00};
+
+	do {
+		Status = SendFrame(&Can, NMT_NM+NODE_ID, bootup, (u8) sizeof(bootup));
+		if (Status != XST_SUCCESS)
+			usleep(1000);
+	} while(Status != XST_SUCCESS);
+}
+
+void CANinout() {
+//CAN Send
+	s16 int_s16 = 0;
+	u8 *msg;
+	u8 size = PDOMsg_buffer[PDOMsg_buf_start_idx].size;
+
+	msg = (u8 *) malloc(size);
+	for (int i=0;i<size;i++) {
+		msg[i] = PDOMsg_buffer[PDOMsg_buf_start_idx].msg[i];
+	}
+
+	free(msg);
+
+	u8 msg_11[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_22[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_33[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_44[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_55[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	u8 msg_66[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(s[i] * 100.);
+		msg_11[2*i] = *(ptr);
+		msg_11[2*i+1] = *(ptr+1);
+	}
+
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * a[i] / LIM_SPEED);
+		msg_22[2*i] = *(ptr);
+		msg_22[2*i+1] = *(ptr+1);
+	}
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * y[0][i] / LIM_SPEED);
+		msg_33[2*i] = *(ptr);
+		msg_33[2*i+1] = *(ptr+1);
+	}
+
+	int_s16 = 0;
+	for (int i=0;i<4;i++) {
+		s8 *ptr = (s8*)&int_s16;
+		int_s16 = (s16)(32767. * w[i] / LIM_SPEED);
+		msg_44[2*i] = *(ptr);
+		msg_44[2*i+1] = *(ptr+1);
+	}
+
+	for (int i=0;i<4;i++) {
+		u8 *ptr = (u8*)&odom[0];
+		msg_55[i] = *(ptr+i);
+	}
+
+	for (int i=0;i<4;i++) {
+		u8 *ptr = (u8*)&odom[1];
+		msg_55[i+4] = *(ptr+i);
+	}
+
+	for (int i=0;i<4;i++) {
+		u8 *ptr = (u8*)&odom[2];
+		msg_66[i] = *(ptr+i);
+	}
+
+	SendFrame(&Can, 0x11, msg_11, (u8) sizeof(msg_11));//pos
+	SendFrame(&Can, 0x22, msg_22, (u8) sizeof(msg_22));//acc
+	SendFrame(&Can, 0x33, msg_33, (u8) sizeof(msg_33));//vel
+	SendFrame(&Can, 0x44, msg_44, (u8) sizeof(msg_44));//cmd
+	SendFrame(&Can, 0x55, msg_55, (u8) sizeof(msg_55));//odom xy
+	SendFrame(&Can, 0x66, msg_66, (u8) sizeof(msg_66));//odom z
+//CAN Receive
+}
