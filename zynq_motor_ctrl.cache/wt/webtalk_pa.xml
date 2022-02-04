@@ -3,7 +3,7 @@
 <!--The data in this file is primarily intended for consumption by Xilinx tools.
 The structure and the elements are likely to change over the next few releases.
 This means code written to parse this file will need to be revisited each subsequent release.-->
-<application name="pa" timeStamp="Tue Jul 13 15:17:27 2021">
+<application name="pa" timeStamp="Wed Sep 15 14:00:45 2021">
 <section name="Project Information" visible="false">
 <property name="ProjectID" value="1b145d3b792d430b9297d8dfc8159d52" type="ProjectID"/>
 <property name="ProjectIteration" value="250" type="ProjectIteration"/>
@@ -24,6 +24,7 @@ This means code written to parse this file will need to be revisited each subseq
 <property name="AutoConnectTarget" value="35" type="JavaHandler"/>
 <property name="BootDevice" value="2" type="JavaHandler"/>
 <property name="CloseDesign" value="5" type="JavaHandler"/>
+<property name="CloseProject" value="1" type="JavaHandler"/>
 <property name="CloseServer" value="2" type="JavaHandler"/>
 <property name="CloseTarget" value="2" type="JavaHandler"/>
 <property name="CreateBlockDesign" value="2" type="JavaHandler"/>
@@ -290,6 +291,11 @@ This means code written to parse this file will need to be revisited each subseq
 <property name="TclFindDialog_RESULT_NAME" value="1" type="GuiHandlerData"/>
 <property name="WaveformNameTree_WAVEFORM_NAME_TREE" value="364" type="GuiHandlerData"/>
 <property name="WaveformView_GOTO_TIME_0" value="1" type="GuiHandlerData"/>
+</item>
+<item name="Other">
+<property name="GuiMode" value="138" type="GuiMode"/>
+<property name="BatchMode" value="0" type="BatchMode"/>
+<property name="TclMode" value="87" type="TclMode"/>
 </item>
 </section>
 </application>
